@@ -14,20 +14,21 @@
  * limitations under the License.
  */
 
-package ie.elliot.api;
+package ie.elliot.api
 
-import org.junit.Test;
+import org.junit.Test
 
-import static org.junit.Assert.*;
+import org.junit.Assert.*
 
 /**
  * Example local unit test, which will execute on the development machine (host).
- *
- * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
+
+ * @see [Testing documentation](http://d.android.com/tools/testing)
  */
-public class ExampleUnitTest {
+class ExampleUnitTest {
     @Test
-    public void testAdditionIsCorrect() throws Exception {
-        assertEquals(4, 2 + 2);
+    @Throws(Exception::class)
+    fun testAdditionIsCorrect() {
+        assertEquals(4, (2 + 2).toLong())
     }
 }

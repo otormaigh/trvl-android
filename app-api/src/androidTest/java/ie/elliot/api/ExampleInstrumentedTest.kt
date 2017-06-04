@@ -14,29 +14,30 @@
  * limitations under the License.
  */
 
-package ie.elliot.api;
+package ie.elliot.api
 
-import android.content.Context;
-import android.support.test.InstrumentationRegistry;
-import android.support.test.runner.AndroidJUnit4;
+import android.content.Context
+import android.support.test.InstrumentationRegistry
+import android.support.test.runner.AndroidJUnit4
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.Test
+import org.junit.runner.RunWith
 
-import static org.junit.Assert.*;
+import org.junit.Assert.*
 
 /**
  * Instrumented test, which will execute on an Android device.
- *
- * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
- */
-@RunWith(AndroidJUnit4.class)
-public class ExampleInstrumentedTest {
-    @Test
-    public void testUseAppContext() throws Exception {
-        // Context of the app under test.
-        Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("ie.elliot.api.test", appContext.getPackageName());
+ * @see [Testing documentation](http://d.android.com/tools/testing)
+ */
+@RunWith(AndroidJUnit4::class)
+class ExampleInstrumentedTest {
+    @Test
+    @Throws(Exception::class)
+    fun testUseAppContext() {
+        // Context of the app under test.
+        val appContext = InstrumentationRegistry.getTargetContext()
+
+        assertEquals("ie.elliot.api.test", appContext.packageName)
     }
 }
