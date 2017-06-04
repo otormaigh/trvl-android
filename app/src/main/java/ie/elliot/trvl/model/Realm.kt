@@ -22,6 +22,6 @@ import io.realm.RealmObject
  * @since 04/06/2017
  */
 
-class Airport(val name: String,
-              val latitude: Double,
-              val longitude: Double) : RealmObject()
+open class Airport(var name: String = "",
+              var latitude: Double = 0.0,
+              var longitude: Double = 0.0) : RealmObject()

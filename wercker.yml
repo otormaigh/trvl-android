@@ -1,0 +1,6 @@
+box: otormaigh/android-pipelines
+build:
+  steps:
+    - script:
+        name: Build and check
+        code: ./gradlew clean assemble check
