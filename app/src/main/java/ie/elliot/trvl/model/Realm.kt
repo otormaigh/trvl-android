@@ -13,26 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ie.elliot.trvl.ui.activity.home
 
-import android.os.Bundle
-import ie.elliot.trvl.R
-import ie.elliot.trvl.base.TrvlActivity
-import ie.elliot.trvl.ui.fragment.AirportSearchFragment.AirportSearchFragment
-import kotlinx.android.synthetic.main.activity_home.*
+package ie.elliot.trvl.model
 
 /**
  * @author Elliot Tormey
  * @since 04/06/2017
  */
-internal class HomeActivity : TrvlActivity() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_home)
-
-        tvWhereTo.setOnClickListener {
-            replaceFrag(AirportSearchFragment())
-        }
-    }
-}
+data class Airport(val name: String,
+                   val latitude: Double,
+                   val longitude: Double)

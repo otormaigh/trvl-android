@@ -13,31 +13,35 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package ie.elliot.trvl.ui.fragment.AirportSearchFragment
 
-import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import ie.elliot.trvl.R
-import kotlinx.android.synthetic.main.fragment_airport_search.*
+import ie.elliot.trvl.model.Airport
+import kotlinx.android.synthetic.main.list_item_airport.view.*
 
 /**
  * @author Elliot Tormey
  * @since 04/06/2017
  */
-internal class AirportSearchFragment : Fragment() {
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_airport_search, container, false)
+internal class AirportSearchAdapter(val airports: List<Airport>) : RecyclerView.Adapter<AirportSearchAdapter.ViewHolder>() {
+    override fun onBindViewHolder(viewHolder: ViewHolder?, position: Int) {
+        viewHolder?.bind(airports[position])
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onCreateViewHolder(container: ViewGroup?, viewType: Int): ViewHolder {
+        return ViewHolder(LayoutInflater.from(container?.context).inflate(R.layout.list_item_airport, container))
+    }
 
-        rvAirports.layoutManager = LinearLayoutManager(context)
-        rvAirports.adapter = AirportSearchAdapter(emptyList())
+    override fun getItemCount(): Int = airports.size
+
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        fun bind(airport: Airport) {
+            itemView.tvAirport.text = airport.name
+        }
     }
 }
