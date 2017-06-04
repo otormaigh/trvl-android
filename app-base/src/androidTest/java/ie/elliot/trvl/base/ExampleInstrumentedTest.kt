@@ -14,20 +14,28 @@
  * limitations under the License.
  */
 
-package ie.elliot.trvl.ui;
+package ie.elliot.trvl.base
 
-import org.junit.Test;
+import android.support.test.InstrumentationRegistry
+import android.support.test.runner.AndroidJUnit4
 
-import static org.junit.Assert.*;
+import org.junit.Test
+import org.junit.runner.RunWith
+
+import org.junit.Assert.*
 
 /**
- * Example local unit test, which will execute on the development machine (host).
+ * Instrumented test, which will execute on an Android device.
  *
- * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
+ * @see [Testing documentation](http://d.android.com/tools/testing)
  */
-public class ExampleUnitTest {
+@RunWith(AndroidJUnit4::class)
+class ExampleInstrumentedTest {
     @Test
-    public void addition_isCorrect() throws Exception {
-        assertEquals(4, 2 + 2);
+    fun useAppContext() {
+        // Context of the app under test.
+        val appContext = InstrumentationRegistry.getTargetContext()
+
+        assertEquals("ie.elliot.trvl.base.test", appContext.packageName)
     }
 }

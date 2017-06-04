@@ -4,5 +4,11 @@
     "location": "New York",
     "latitude": 40.639722,
     "longitude": -73.778889
+  },
+  {
+    "name": "DUB",
+    "location": "Dublin",
+    "latitude": 53.421389,
+    "longitude": -6.27
   }
 ]

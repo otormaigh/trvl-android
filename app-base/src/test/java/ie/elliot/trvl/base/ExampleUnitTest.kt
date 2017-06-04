@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package ie.elliot.api
+package ie.elliot.trvl.base
 
 import org.junit.Test
 
@@ -27,7 +27,7 @@ import org.junit.Assert.*
  */
 class ExampleUnitTest {
     @Test
-    fun testAdditionIsCorrect() {
+    fun addition_isCorrect() {
         assertEquals(4, (2 + 2).toLong())
     }
 }
