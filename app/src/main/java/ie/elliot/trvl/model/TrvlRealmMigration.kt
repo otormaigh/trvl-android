@@ -13,15 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package ie.elliot.trvl.model
 
-import io.realm.RealmObject
+import io.realm.DynamicRealm
+import io.realm.RealmMigration
 
 /**
  * @author Elliot Tormey
  * @since 04/06/2017
  */
+internal class TrvlRealmMigration : RealmMigration {
+    private val VERSION_0 = 0
 
-class Airport(val name: String,
-              val latitude: Double,
-              val longitude: Double) : RealmObject()
+    override fun migrate(dynamicRealm: DynamicRealm?, oldVersion: Long, newVersion: Long) {
+    }
+}

@@ -13,15 +13,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ie.elliot.trvl.model
 
-import io.realm.RealmObject
+package ie.elliot.trvl
+
+import android.app.Application
+import ie.elliot.trvl.model.TrvlRealmMigration
+import io.realm.Realm
+import io.realm.RealmConfiguration
 
 /**
  * @author Elliot Tormey
  * @since 04/06/2017
  */
+internal class TrvlApplication : Application() {
+    override fun onCreate() {
+        super.onCreate()
 
-class Airport(val name: String,
-              val latitude: Double,
-              val longitude: Double) : RealmObject()
+        Realm.init(this)
+        val configuration = RealmConfiguration.Builder()
+                .name("trvl.realm")
+                .schemaVersion(0)
+                .migration(TrvlRealmMigration())
+
+        if (BuildConfig.DEBUG) {
+            configuration.deleteRealmIfMigrationNeeded()
+        }
+        configuration.build()
+    }
+}
