@@ -16,6 +16,7 @@
 package ie.elliot.trvl.ui.fragment.AirportSearchFragment
 
 import android.os.Bundle
+import android.support.annotation.IdRes
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
@@ -31,6 +32,25 @@ import kotlinx.android.synthetic.main.fragment_airport_search.*
  * @since 04/06/2017
  */
 internal class AirportSearchFragment : Fragment() {
+    companion object {
+        private val DESTINATION = "destination"
+        private val ORIGIN = "origin"
+
+        fun newInstance(@IdRes viewRes: Int): AirportSearchFragment {
+            val bundle = Bundle()
+            if (viewRes == R.id.tvDestination) {
+                bundle.putBoolean(DESTINATION, true)
+            } else {
+                bundle.putBoolean(ORIGIN, true)
+            }
+
+            val fragment = AirportSearchFragment().apply {
+                arguments = bundle
+            }
+
+            return fragment
+        }
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_airport_search, container, false)
@@ -38,10 +58,13 @@ internal class AirportSearchFragment : Fragment() {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val airports = Realm.getDefaultInstance().where(Airport::class.java).findAll()
+        if (arguments.getBoolean(DESTINATION)) {
+            etSearch.setHint(R.string.where_to)
+        } else {
+            etSearch.setHint(R.string.depart_from)
+        }
 
         rvAirports.layoutManager = LinearLayoutManager(context)
-        rvAirports.adapter = AirportSearchAdapter(airports)
+        rvAirports.adapter = AirportSearchAdapter()
     }
 }

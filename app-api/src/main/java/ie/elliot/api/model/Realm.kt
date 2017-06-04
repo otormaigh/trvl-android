@@ -29,4 +29,8 @@ class ApiRealmModule
 open class Airport(@PrimaryKey
                    var name: String = "",
                    var latitude: Double = 0.0,
-                   var longitude: Double = 0.0) : RealmObject()
+                   var longitude: Double = 0.0,
+        // TODO : Elliot -> Test data
+                   var price: String = "€321.30",
+        // TODO : Elliot -> Test data
+                   var flightTime: String = "18h 13m") : RealmObject()

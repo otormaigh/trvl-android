@@ -16,6 +16,7 @@
 package ie.elliot.trvl.ui.activity.home
 
 import android.os.Bundle
+import android.view.View
 import ie.elliot.trvl.R
 import ie.elliot.trvl.base.TrvlActivity
 import ie.elliot.trvl.ui.fragment.AirportSearchFragment.AirportSearchFragment
@@ -25,14 +26,16 @@ import kotlinx.android.synthetic.main.activity_home.*
  * @author Elliot Tormey
  * @since 04/06/2017
  */
-internal class HomeActivity : TrvlActivity() {
-
+internal class HomeActivity : TrvlActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
-        tvWhereTo.setOnClickListener {
-            replaceFrag(AirportSearchFragment())
-        }
+        tvDestination.setOnClickListener(this)
+        tvOrigin.setOnClickListener(this)
+    }
+
+    override fun onClick(view: View) {
+        replaceFrag(AirportSearchFragment.newInstance(view.id))
     }
 }

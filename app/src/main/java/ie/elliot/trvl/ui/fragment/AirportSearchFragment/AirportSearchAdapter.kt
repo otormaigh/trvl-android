@@ -22,26 +22,40 @@ import android.view.View
 import android.view.ViewGroup
 import ie.elliot.trvl.R
 import ie.elliot.api.model.Airport
+import io.realm.Realm
+import io.realm.RealmRecyclerViewAdapter
 import kotlinx.android.synthetic.main.list_item_airport.view.*
+import timber.log.Timber
 
 /**
  * @author Elliot Tormey
  * @since 04/06/2017
  */
-internal class AirportSearchAdapter(val airports: List<Airport>) : RecyclerView.Adapter<AirportSearchAdapter.ViewHolder>() {
+internal class AirportSearchAdapter
+    : RealmRecyclerViewAdapter<Airport, AirportSearchAdapter.ViewHolder>(Realm.getDefaultInstance().where(Airport::class.java).findAllAsync(), true) {
     override fun onBindViewHolder(viewHolder: ViewHolder?, position: Int) {
-        viewHolder?.bind(airports[position])
+        if (data != null) {
+            viewHolder?.bind(data!![position])
+        }
     }
 
     override fun onCreateViewHolder(container: ViewGroup?, viewType: Int): ViewHolder {
         return ViewHolder(LayoutInflater.from(container?.context).inflate(R.layout.list_item_airport, container, false))
     }
 
-    override fun getItemCount(): Int = airports.size
+    override fun getItemCount(): Int = if (data == null) 0 else data!!.size
 
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
         fun bind(airport: Airport) {
             itemView.tvAirport.text = airport.name
+            itemView.tvFlightTime.text = airport.flightTime
+            itemView.tvPrice.text = airport.price
+
+            itemView.setOnClickListener(this)
+        }
+
+        override fun onClick(view: View) {
+            Timber.i("onClick")
         }
     }
 }
