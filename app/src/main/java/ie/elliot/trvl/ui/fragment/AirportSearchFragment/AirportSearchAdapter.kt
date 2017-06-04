@@ -21,7 +21,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import ie.elliot.trvl.R
-import ie.elliot.trvl.model.Airport
+import ie.elliot.api.model.Airport
 import kotlinx.android.synthetic.main.list_item_airport.view.*
 
 /**
@@ -34,7 +34,7 @@ internal class AirportSearchAdapter(val airports: List<Airport>) : RecyclerView.
     }
 
     override fun onCreateViewHolder(container: ViewGroup?, viewType: Int): ViewHolder {
-        return ViewHolder(LayoutInflater.from(container?.context).inflate(R.layout.list_item_airport, container))
+        return ViewHolder(LayoutInflater.from(container?.context).inflate(R.layout.list_item_airport, container, false))
     }
 
     override fun getItemCount(): Int = airports.size

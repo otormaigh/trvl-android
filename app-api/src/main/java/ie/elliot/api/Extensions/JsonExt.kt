@@ -13,15 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ie.elliot.trvl.model
+package ie.elliot.api.Extensions
 
-import io.realm.RealmObject
+import android.content.Context
+import android.support.annotation.RawRes
+import java.nio.charset.StandardCharsets
 
 /**
  * @author Elliot Tormey
  * @since 04/06/2017
  */
 
-open class Airport(var name: String = "",
-              var latitude: Double = 0.0,
-              var longitude: Double = 0.0) : RealmObject()
+fun Context.rawJsonToString(@RawRes resourceId: Int): String {
+    resources.openRawResource(resourceId).use {
+        val size = it.available()
+        val buffer = ByteArray(size)
+        it.read(buffer)
+        it.close()
+
+        return String(buffer, StandardCharsets.UTF_8)
+    }
+}

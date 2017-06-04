@@ -22,6 +22,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import ie.elliot.trvl.R
+import ie.elliot.api.model.Airport
+import io.realm.Realm
 import kotlinx.android.synthetic.main.fragment_airport_search.*
 
 /**
@@ -37,7 +39,9 @@ internal class AirportSearchFragment : Fragment() {
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val airports = Realm.getDefaultInstance().where(Airport::class.java).findAll()
+
         rvAirports.layoutManager = LinearLayoutManager(context)
-        rvAirports.adapter = AirportSearchAdapter(emptyList())
+        rvAirports.adapter = AirportSearchAdapter(airports)
     }
 }

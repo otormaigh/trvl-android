@@ -17,9 +17,12 @@
 package ie.elliot.trvl
 
 import android.app.Application
+import ie.elliot.api.ApiClient
+import ie.elliot.api.model.ApiRealmModule
 import ie.elliot.trvl.model.TrvlRealmMigration
 import io.realm.Realm
 import io.realm.RealmConfiguration
+import timber.log.Timber
 
 /**
  * @author Elliot Tormey
@@ -29,15 +32,22 @@ internal class TrvlApplication : Application() {
     override fun onCreate() {
         super.onCreate()
 
+        Timber.plant(Timber.DebugTree())
+
         Realm.init(this)
         val configuration = RealmConfiguration.Builder()
                 .name("trvl.realm")
                 .schemaVersion(0)
                 .migration(TrvlRealmMigration())
+                .modules(Realm.getDefaultModule(), ApiRealmModule())
 
         if (BuildConfig.DEBUG) {
             configuration.deleteRealmIfMigrationNeeded()
         }
-        configuration.build()
+        Realm.setDefaultConfiguration(configuration.build())
+
+        Timber.i(Realm.getDefaultInstance().configuration.toString())
+
+        ApiClient.loadTestData(this)
     }
 }
