@@ -17,6 +17,7 @@ package ie.elliot.trvl.ui.activity.home
 
 import android.os.Bundle
 import android.view.View
+import ie.elliot.api.model.Airport
 import ie.elliot.trvl.R
 import ie.elliot.trvl.base.TrvlActivity
 import ie.elliot.trvl.ui.fragment.AirportSearchFragment.AirportSearchFragment
@@ -31,8 +32,8 @@ internal class HomeActivity : TrvlActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
-        tvDestination.setOnClickListener(this)
-        tvOrigin.setOnClickListener(this)
+        avDestination.setOnClickListener(this)
+        avOrigin.setOnClickListener(this)
     }
 
     override fun onClick(view: View) {

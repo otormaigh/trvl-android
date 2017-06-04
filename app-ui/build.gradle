@@ -15,6 +15,7 @@
  */
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.tapadoo.android.sputnik'
 
 android {
@@ -43,10 +44,17 @@ android {
             shrinkResources true
         }
     }
+
+    lintOptions {
+        ignore 'UnusedResources'
+    }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(":app-base")
+    implementation project(":app-api")
+
     androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })

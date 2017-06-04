@@ -1,6 +1,7 @@
 [
   {
-    "name": "New York (JFK)",
+    "name": "JFK",
+    "location": "New York",
     "latitude": 40.639722,
     "longitude": -73.778889
   }

@@ -38,7 +38,7 @@ internal class AirportSearchFragment : Fragment() {
 
         fun newInstance(@IdRes viewRes: Int): AirportSearchFragment {
             val bundle = Bundle()
-            if (viewRes == R.id.tvDestination) {
+            if (viewRes == R.id.avDestination) {
                 bundle.putBoolean(DESTINATION, true)
             } else {
                 bundle.putBoolean(ORIGIN, true)

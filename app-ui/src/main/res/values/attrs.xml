@@ -14,20 +14,8 @@
   ~ limitations under the License.
   -->
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_margin="16dp"
-    android:orientation="vertical">
-
-    <ie.elliot.trvl.ui.view.AirportView
-        android:id="@+id/avDepart"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <ie.elliot.trvl.ui.view.AirportView
-        android:id="@+id/avOrigin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-</LinearLayout>
+<resources>
+    <declare-styleable name="AirportView">
+        <attr name="hint" format="integer" />
+    </declare-styleable>
+</resources>

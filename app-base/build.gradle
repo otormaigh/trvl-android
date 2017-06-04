@@ -43,6 +43,10 @@ android {
             shrinkResources true
         }
     }
+
+    lintOptions {
+        ignore 'UnusedResources'
+    }
 }
 
 dependencies {

@@ -28,6 +28,7 @@ class ApiRealmModule
 
 open class Airport(@PrimaryKey
                    var name: String = "",
+                   var location: String = "",
                    var latitude: Double = 0.0,
                    var longitude: Double = 0.0,
         // TODO : Elliot -> Test data
