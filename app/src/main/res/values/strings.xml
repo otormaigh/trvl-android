@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">TRVL</string>
+
+    <!-- activity_home -->
+    <string name="depart_from">Depart from</string>
+    <string name="where_to">Where to</string>
+    <string name="search">Search</string>
+
+    <!-- fragment_airport_search -->
+    <string name="top_locations">Top locations</string>
 </resources>
