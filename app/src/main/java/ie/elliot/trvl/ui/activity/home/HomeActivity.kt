@@ -15,11 +15,13 @@
  */
 package ie.elliot.trvl.ui.activity.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import ie.elliot.api.ApiIntentService
 import ie.elliot.trvl.R
 import ie.elliot.trvl.base.TrvlActivity
+import ie.elliot.trvl.ui.activity.airport_confirm.AirportConfirmActivity
 import ie.elliot.trvl.ui.fragment.AirportSearchFragment.AirportSearchFragment
 import kotlinx.android.synthetic.main.activity_home.*
 
@@ -34,11 +36,15 @@ internal class HomeActivity : TrvlActivity(), View.OnClickListener {
 
         avDestination.setOnClickListener(this)
         avOrigin.setOnClickListener(this)
+        btnSearch.setOnClickListener(this)
 
         ApiIntentService.getAllAirports(this)
     }
 
     override fun onClick(view: View) {
-        replaceFrag(AirportSearchFragment.newInstance(view.id))
+        when (view.id) {
+            R.id.avDestination or R.id.avOrigin -> replaceFrag(AirportSearchFragment.newInstance(view.id))
+            R.id.btnSearch -> startActivity(Intent(this, AirportConfirmActivity::class.java))
+        }
     }
 }

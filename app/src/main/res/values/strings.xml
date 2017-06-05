@@ -1,11 +1,25 @@
 <resources>
     <string name="app_name">TRVL</string>
 
+    <!-- Coommon -->
+    <string name="search">Search</string>
+
     <!-- activity_home -->
     <string name="depart_from">Depart from</string>
     <string name="where_to">Where to</string>
-    <string name="search">Search</string>
 
     <!-- fragment_airport_search -->
     <string name="top_locations">Top locations</string>
+
+    <!-- activity_airport_confirm -->
+    <string name="one_way">One way</string>
+    <string name="round_trip">Round trip</string>
+    <string name="flying_out_on">Flying out on</string>
+    <string name="passengers">Passengers</string>
+    <string name="zero">0</string>
+    <string name="plus_sign">+</string>
+    <string name="minus_sign">-</string>
+    <string name="stops">Stops</string>
+    <string name="airline_class">Airline class</string>
+    <string name="departure_time">Departure time</string>
 </resources>
