@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package ie.elliot.api
 
 import android.content.Context
@@ -21,25 +20,53 @@ import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
 import ie.elliot.api.Extensions.rawJsonToString
 import ie.elliot.api.model.Airport
+import io.reactivex.internal.schedulers.RxThreadFactory
 import io.realm.Realm
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
+import retrofit2.converter.moshi.MoshiConverterFactory
 
 /**
  * @author Elliot Tormey
  * @since 04/06/2017
  */
-object ApiClient {
-    private val moshi = Moshi.Builder().build()
+internal object ApiClient {
+    val moshi = Moshi.Builder().build()
 
-    fun loadTestData(context: Context) {
-        val json = context.rawJsonToString(R.raw.test_airports)
-        val type = Types.newParameterizedType(List::class.java, Airport::class.java)
-        val adapter = moshi.adapter<List<Airport>>(type)
-        val airports = adapter.fromJson(json)
+    private var apiService: ApiService? = null
 
-        Realm.getDefaultInstance().run {
-            executeTransaction {
-                copyToRealmOrUpdate(airports)
+    fun instance(): ApiService {
+        if (apiService == null) {
+            val okHttpBuilder = OkHttpClient.Builder()
+            if (BuildConfig.DEBUG) {
+                okHttpBuilder.addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
             }
+
+            val retrofitBuilder = Retrofit.Builder()
+                    .baseUrl(BuildConfig.API_URL)
+                    .addConverterFactory(MoshiConverterFactory.create(moshi))
+                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+
+            apiService = retrofitBuilder.build().create(ApiService::class.java)
+        }
+        return apiService as ApiService
+    }
+}
+
+/**
+ * Load any required test data into the Realm.
+ */
+fun loadTestData(context: Context) {
+    val json = context.rawJsonToString(R.raw.test_airports)
+    val type = Types.newParameterizedType(List::class.java, Airport::class.java)
+    val adapter = ApiClient.moshi.adapter<List<Airport>>(type)
+    val airports = adapter.fromJson(json)
+
+    Realm.getDefaultInstance().run {
+        executeTransaction {
+            copyToRealmOrUpdate(airports)
         }
     }
 }

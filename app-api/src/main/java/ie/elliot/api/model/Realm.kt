@@ -27,11 +27,12 @@ import io.realm.annotations.RealmModule
 class ApiRealmModule
 
 open class Airport(@PrimaryKey
+                   var id: String = "",
+                   var iata: String = "",
                    var name: String = "",
-                   var location: String = "",
                    var latitude: Double = 0.0,
                    var longitude: Double = 0.0,
-        // TODO : Elliot -> Test data
+                   // TODO : Elliot -> Test data
                    var price: String = "€321.30",
-        // TODO : Elliot -> Test data
+                   // TODO : Elliot -> Test data
                    var flightTime: String = "18h 13m") : RealmObject()

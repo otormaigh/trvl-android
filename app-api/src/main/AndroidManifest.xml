@@ -15,4 +15,12 @@
   -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="ie.elliot.api" />
+    package="ie.elliot.api">
+
+    <application>
+        <service
+            android:name=".ApiIntentService"
+            android:enabled="true"
+            android:exported="false" />
+    </application>
+</manifest>

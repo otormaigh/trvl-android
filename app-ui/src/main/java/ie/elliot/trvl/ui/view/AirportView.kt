@@ -34,8 +34,8 @@ class AirportView : LinearLayout {
         set(airport) {
             field = airport
             showHint = false
-            tvLocation.text = airport.location
-            tvAirport.text = airport.name
+            tvLocation.text = airport.name
+            tvAirport.text = airport.iata
         }
 
     @StringRes
