@@ -14,26 +14,20 @@
  * limitations under the License.
  */
 
-package ie.elliot.trvl.ui.activity.airport_confirm
+package ie.elliot.trvl.ui.activity.flights_results
 
-import android.content.Intent
 import android.os.Bundle
 import ie.elliot.trvl.R
 import ie.elliot.trvl.base.TrvlActivity
-import ie.elliot.trvl.ui.activity.flights_results.FlightsResultsActivity
-import kotlinx.android.synthetic.main.activity_airport_confirm.*
 
 /**
  * @author Elliot Tormey
- * @since 04/06/2017
+ * @since 05/06/2017
  */
-internal class AirportConfirmActivity : TrvlActivity() {
+internal class FlightsResultsActivity : TrvlActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_airport_confirm)
-
-        btnSearchFlights.setOnClickListener {
-            startActivity(Intent(this, FlightsResultsActivity::class.java))
-        }
+        setContentView(R.layout.activity_flights_results)
     }
 }

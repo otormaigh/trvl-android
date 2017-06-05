@@ -240,9 +240,9 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/btnSearch"
+        android:id="@+id/btnSearchFlights"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/search" />
+        android:text="@string/search_flights" />
 
 </LinearLayout>
