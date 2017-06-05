@@ -20,5 +20,6 @@
         <item quantity="zero">Non-Stop</item>
         <item quantity="one">%d Stop</item>
         <item quantity="few">%d Stops</item>
+        <item quantity="other">%d Stop</item>
     </plurals>
 </resources>

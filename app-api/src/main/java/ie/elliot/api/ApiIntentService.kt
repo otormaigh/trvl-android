@@ -22,7 +22,9 @@ import android.content.Intent
 import android.util.Log
 import com.squareup.moshi.Types
 import ie.elliot.api.Extensions.rawJsonToString
+import ie.elliot.api.model.Airline
 import ie.elliot.api.model.Airport
+import ie.elliot.api.model.FlightResult
 import io.reactivex.schedulers.Schedulers
 import io.realm.Realm
 import timber.log.Timber
@@ -46,14 +48,22 @@ class ApiIntentService : IntentService("ApiIntentService") {
          * Load any required test data into the Realm.
          */
         fun loadTestData(context: Context) {
-            val json = context.rawJsonToString(R.raw.test_airports)
-            val type = Types.newParameterizedType(List::class.java, Airport::class.java)
-            val adapter = ApiClient.moshi.adapter<List<Airport>>(type)
-            val airports = adapter.fromJson(json)
+            val airports = ApiClient.moshi
+                    .adapter<List<Airport>>(Types.newParameterizedType(List::class.java, Airport::class.java))
+                    .fromJson(context.rawJsonToString(R.raw.test_airports))
+            val airlines = ApiClient.moshi
+                    .adapter<List<Airline>>(Types.newParameterizedType(List::class.java, Airline::class.java))
+                    .fromJson(context.rawJsonToString(R.raw.test_airlines))
+            val flightResults = ApiClient.moshi
+                    .adapter<List<FlightResult>>(Types.newParameterizedType(List::class.java, FlightResult::class.java))
+                    .fromJson(context.rawJsonToString(R.raw.test_flight_results))
+
 
             Realm.getDefaultInstance().run {
                 executeTransaction {
                     copyToRealmOrUpdate(airports)
+                    copyToRealmOrUpdate(airlines)
+                    copyToRealmOrUpdate(flightResults)
                 }
             }
         }

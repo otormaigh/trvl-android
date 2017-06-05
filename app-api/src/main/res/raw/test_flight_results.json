@@ -1,0 +1,41 @@
+[
+  {
+    "id": "1",
+    "airline": {
+      "id": "1",
+      "logo": "",
+      "name": "Swiss Air"
+    },
+    "price": "€123",
+    "departAt": 1496696543,
+    "arriveAt": 1496696675,
+    "flightTime": "13h 40m",
+    "stopCount": 0
+  },
+  {
+    "id": "2",
+    "airline": {
+      "id": "2",
+      "logo": "",
+      "name": "Air New Zealand"
+    },
+    "price": "€423",
+    "departAt": 1496696543,
+    "arriveAt": 1496696675,
+    "flightTime": "13h 40m",
+    "stopCount": 2
+  },
+  {
+    "id": "3",
+    "airline": {
+      "id": "3",
+      "logo": "",
+      "name": "Lufthansa Air"
+    },
+    "price": "€279",
+    "departAt": 1496696543,
+    "arriveAt": 1496696675,
+    "flightTime": "13h 40m",
+    "stopCount": 3
+  }
+]

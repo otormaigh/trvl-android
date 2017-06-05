@@ -40,10 +40,10 @@ open class Airport(@PrimaryKey
 
 open class FlightResult(@PrimaryKey
                         var id: String = "",
-                        var airline: Airline,
+                        var airline: Airline = Airline(),
                         var price: String = "",
-                        var departAt: Date = Date(),
-                        var arriveAt: Date = Date(),
+                        var departAt: Long = 0,
+                        var arriveAt: Long = 0,
                         var flightTime: String = "",
                         var stopCount: Int = 0) : RealmObject()
 

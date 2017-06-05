@@ -22,7 +22,7 @@ import android.view.View
 import android.view.ViewGroup
 import ie.elliot.api.model.FlightResult
 import ie.elliot.trvl.R
-import io.realm.RealmList
+import io.realm.Realm
 import io.realm.RealmRecyclerViewAdapter
 import kotlinx.android.synthetic.main.list_item_flight_result.view.*
 
@@ -30,8 +30,8 @@ import kotlinx.android.synthetic.main.list_item_flight_result.view.*
  * @author Elliot Tormey
  * @since 05/06/2017
  */
-internal class FlightResultAdapter(flightResults: RealmList<FlightResult>)
-    : RealmRecyclerViewAdapter<FlightResult, FlightResultAdapter.ViewHolder>(flightResults, true) {
+internal class FlightResultsAdapter()
+    : RealmRecyclerViewAdapter<FlightResult, FlightResultsAdapter.ViewHolder>(Realm.getDefaultInstance().where(FlightResult::class.java).findAllAsync(), true) {
 
     override fun onBindViewHolder(viewHolder: ViewHolder?, position: Int) {
         if (data != null) {
@@ -48,6 +48,7 @@ internal class FlightResultAdapter(flightResults: RealmList<FlightResult>)
             if (flightResult != null) {
                 itemView.tvAirlineName.text = flightResult.airline.name
                 itemView.tvPrice.text = flightResult.price
+                // TODO : Elliot -> Convert timestamp to hh:mmZ e.g. 18:30 IST
                 // itemView.tvDepartAt.text = flightResult.departAt
                 // itemView.tvArriveAt.text = flightResult.arriveAt
                 itemView.tvFlightTime.text = flightResult.flightTime
