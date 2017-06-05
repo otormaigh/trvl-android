@@ -43,7 +43,8 @@ internal class HomeActivity : TrvlActivity(), View.OnClickListener {
 
     override fun onClick(view: View) {
         when (view.id) {
-            R.id.avDestination or R.id.avOrigin -> replaceFrag(AirportSearchFragment.newInstance(view.id))
+            R.id.avDestination -> replaceFrag(AirportSearchFragment.newInstance(view.id))
+            R.id.avOrigin -> replaceFrag(AirportSearchFragment.newInstance(view.id))
             R.id.btnSearch -> startActivity(Intent(this, AirportConfirmActivity::class.java))
         }
     }
