@@ -2,3 +2,4 @@
 * Transition between HomeActivity and AirportSearchFragment
 * Filterable Realm RecyclerView in AirportSearchAdapter
 * Activity/Fragment transition animation
+* Add currency conversion

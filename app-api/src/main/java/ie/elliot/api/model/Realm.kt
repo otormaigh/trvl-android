@@ -18,6 +18,7 @@ package ie.elliot.api.model
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 import io.realm.annotations.RealmModule
+import java.util.*
 
 /**
  * @author Elliot Tormey
@@ -32,7 +33,21 @@ open class Airport(@PrimaryKey
                    var name: String = "",
                    var latitude: Double = 0.0,
                    var longitude: Double = 0.0,
-                   // TODO : Elliot -> Test data
+        // TODO : Elliot -> Test data
                    var price: String = "€321.30",
-                   // TODO : Elliot -> Test data
+        // TODO : Elliot -> Test data
                    var flightTime: String = "18h 13m") : RealmObject()
+
+open class FlightResult(@PrimaryKey
+                        var id: String = "",
+                        var airline: Airline,
+                        var price: String = "",
+                        var departAt: Date = Date(),
+                        var arriveAt: Date = Date(),
+                        var flightTime: String = "",
+                        var stopCount: Int = 0) : RealmObject()
+
+open class Airline(@PrimaryKey
+                   var id: String = "",
+                   var logo: String = "",
+                   var name: String = "") : RealmObject()
