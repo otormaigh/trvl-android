@@ -19,7 +19,7 @@
         </activity>
 
         <activity android:name=".ui.activity.airport_confirm.AirportConfirmActivity" />
-        <activity android:name=".ui.activity.flights_results.FlightsResultsActivity" />
+        <activity android:name=".ui.activity.flight_results.FlightResultsActivity" />
     </application>
 
 </manifest>

@@ -20,7 +20,7 @@ import android.content.Intent
 import android.os.Bundle
 import ie.elliot.trvl.R
 import ie.elliot.trvl.base.TrvlActivity
-import ie.elliot.trvl.ui.activity.flights_results.FlightsResultsActivity
+import ie.elliot.trvl.ui.activity.flight_results.FlightResultsActivity
 import kotlinx.android.synthetic.main.activity_airport_confirm.*
 
 /**
@@ -33,7 +33,7 @@ internal class AirportConfirmActivity : TrvlActivity() {
         setContentView(R.layout.activity_airport_confirm)
 
         btnSearchFlights.setOnClickListener {
-            startActivity(Intent(this, FlightsResultsActivity::class.java))
+            startActivity(Intent(this, FlightResultsActivity::class.java))
         }
     }
 }

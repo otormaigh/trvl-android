@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package ie.elliot.trvl.ui.activity.flights_results
+package ie.elliot.trvl.ui.activity.flight_results
 
 import android.os.Bundle
 import ie.elliot.trvl.R
@@ -24,10 +24,10 @@ import ie.elliot.trvl.base.TrvlActivity
  * @author Elliot Tormey
  * @since 05/06/2017
  */
-internal class FlightsResultsActivity : TrvlActivity() {
+internal class FlightResultsActivity : TrvlActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_flights_results)
+        setContentView(R.layout.activity_flight_results)
     }
 }

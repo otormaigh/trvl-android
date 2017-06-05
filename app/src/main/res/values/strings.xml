@@ -22,7 +22,7 @@
     <string name="departure_time">Departure time</string>
     <string name="search_flights">Search flights</string>
 
-    <!-- activity_flights_results -->
+    <activity_flight_resultsults -->
     <string name="num_results">%d results</string>
     <string name="sort">Sort</string>
     <string name="filter">Filter</string>
