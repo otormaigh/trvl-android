@@ -20,6 +20,9 @@ import android.app.IntentService
 import android.content.Context
 import android.content.Intent
 import android.util.Log
+import com.squareup.moshi.Types
+import ie.elliot.api.Extensions.rawJsonToString
+import ie.elliot.api.model.Airport
 import io.reactivex.schedulers.Schedulers
 import io.realm.Realm
 import timber.log.Timber
@@ -36,6 +39,22 @@ class ApiIntentService : IntentService("ApiIntentService") {
             Intent(context, ApiIntentService::class.java).apply {
                 putExtra(GET_AIRPORTS, true)
                 context.startService(this)
+            }
+        }
+
+        /**
+         * Load any required test data into the Realm.
+         */
+        fun loadTestData(context: Context) {
+            val json = context.rawJsonToString(R.raw.test_airports)
+            val type = Types.newParameterizedType(List::class.java, Airport::class.java)
+            val adapter = ApiClient.moshi.adapter<List<Airport>>(type)
+            val airports = adapter.fromJson(json)
+
+            Realm.getDefaultInstance().run {
+                executeTransaction {
+                    copyToRealmOrUpdate(airports)
+                }
             }
         }
     }

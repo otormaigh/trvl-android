@@ -36,12 +36,8 @@ android {
         debug {
         }
         qa {
-            minifyEnabled true
-            shrinkResources true
         }
         release {
-            minifyEnabled true
-            shrinkResources true
         }
     }
 

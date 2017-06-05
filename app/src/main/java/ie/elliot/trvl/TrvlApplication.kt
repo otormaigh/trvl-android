@@ -17,7 +17,7 @@
 package ie.elliot.trvl
 
 import android.app.Application
-import ie.elliot.api.loadTestData
+import ie.elliot.api.ApiIntentService
 import ie.elliot.api.model.ApiRealmModule
 import ie.elliot.trvl.model.TrvlRealmMigration
 import io.realm.Realm
@@ -37,7 +37,7 @@ internal class TrvlApplication : Application() {
         initRealm()
 
         // TODO : Elliot -> Test data.
-        loadTestData(this)
+        ApiIntentService.loadTestData(this)
     }
 
     private fun initRealm() {

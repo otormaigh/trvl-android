@@ -15,13 +15,7 @@
  */
 package ie.elliot.api
 
-import android.content.Context
 import com.squareup.moshi.Moshi
-import com.squareup.moshi.Types
-import ie.elliot.api.Extensions.rawJsonToString
-import ie.elliot.api.model.Airport
-import io.reactivex.internal.schedulers.RxThreadFactory
-import io.realm.Realm
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -52,21 +46,5 @@ internal object ApiClient {
             apiService = retrofitBuilder.build().create(ApiService::class.java)
         }
         return apiService as ApiService
-    }
-}
-
-/**
- * Load any required test data into the Realm.
- */
-fun loadTestData(context: Context) {
-    val json = context.rawJsonToString(R.raw.test_airports)
-    val type = Types.newParameterizedType(List::class.java, Airport::class.java)
-    val adapter = ApiClient.moshi.adapter<List<Airport>>(type)
-    val airports = adapter.fromJson(json)
-
-    Realm.getDefaultInstance().run {
-        executeTransaction {
-            copyToRealmOrUpdate(airports)
-        }
     }
 }

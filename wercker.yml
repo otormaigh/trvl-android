@@ -2,5 +2,8 @@ box: otormaigh/android-pipelines
 build:
   steps:
     - script:
-        name: Build and check
-        code: ./gradlew assembleQa assembleRelease check
+        name: Assemble QA and release builds
+        code: ./gradlew assembleQa assembleRelease
+    - script:
+        name: Run check
+        code: ./gradlew check

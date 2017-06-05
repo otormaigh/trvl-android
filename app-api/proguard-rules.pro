@@ -28,3 +28,6 @@
 -dontwarn okio.**
 -dontwarn javax.annotation.Nullable
 -dontwarn javax.annotation.ParametersAreNonnullByDefault
+
+# Model classes
+-keep class ie.elliot.api.model.** { *; }
