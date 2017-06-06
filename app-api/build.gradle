@@ -15,16 +15,13 @@ android {
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
-        buildConfigField "String", "API_URL", "\"http://0.0.0.0:10001\""
+        buildConfigField "String", "API_URL", "$TRVL_DEV_API"
     }
 
     buildTypes {
-        debug {
-        }
-        qa {
-        }
-        release {
-        }
+        debug {}
+        qa {}
+        release {}
     }
 
     lintOptions {
