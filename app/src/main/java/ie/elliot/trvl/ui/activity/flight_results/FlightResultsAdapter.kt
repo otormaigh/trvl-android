@@ -20,7 +20,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import ie.elliot.api.model.FlightResult
+import ie.elliot.api.model.Flight
 import ie.elliot.trvl.R
 import io.realm.Realm
 import io.realm.RealmRecyclerViewAdapter
@@ -30,8 +30,8 @@ import kotlinx.android.synthetic.main.list_item_flight_result.view.*
  * @author Elliot Tormey
  * @since 05/06/2017
  */
-internal class FlightResultsAdapter()
-    : RealmRecyclerViewAdapter<FlightResult, FlightResultsAdapter.ViewHolder>(Realm.getDefaultInstance().where(FlightResult::class.java).findAllAsync(), true) {
+internal class FlightResultsAdapter
+    : RealmRecyclerViewAdapter<Flight, FlightResultsAdapter.ViewHolder>(Realm.getDefaultInstance().where(Flight::class.java).findAllAsync(), true) {
 
     override fun onBindViewHolder(viewHolder: ViewHolder?, position: Int) {
         if (data != null) {
@@ -44,16 +44,16 @@ internal class FlightResultsAdapter()
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(flightResult: FlightResult?) {
-            if (flightResult != null) {
-                itemView.tvAirlineName.text = flightResult.airline.name
-                itemView.tvPrice.text = flightResult.price
+        fun bind(flight: Flight?) {
+            if (flight != null) {
+                itemView.tvAirlineName.text = flight.airline?.name
+                itemView.tvPrice.text = flight.price
                 // TODO : Elliot -> Convert timestamp to hh:mmZ e.g. 18:30 IST
-                // itemView.tvDepartAt.text = flightResult.departAt
-                // itemView.tvArriveAt.text = flightResult.arriveAt
-                itemView.tvFlightTime.text = flightResult.flightTime
+                // itemView.tvDepartAt.text = flight.departAt
+                // itemView.tvArriveAt.text = flight.arriveAt
+                itemView.tvFlightTime.text = flight.flightTime
 
-                val stopCount = itemView.resources.getQuantityString(R.plurals.num_stop, flightResult.stopCount)
+                val stopCount = itemView.resources.getQuantityString(R.plurals.num_stop, flight.stopCount)
                 itemView.tvStops.text = stopCount
             }
         }

@@ -16,7 +16,9 @@
 
 package ie.elliot.api
 
+import ie.elliot.api.model.Airline
 import ie.elliot.api.model.Airport
+import ie.elliot.api.model.Flight
 import io.reactivex.Observable
 import retrofit2.http.GET
 
@@ -27,4 +29,10 @@ import retrofit2.http.GET
 internal interface ApiService {
     @GET("airports/")
     fun getAirports(): Observable<List<Airport>>
+
+    @GET("airlines/")
+    fun getAirlines(): Observable<List<Airline>>
+
+    @GET("flights/")
+    fun getFlights(): Observable<List<Flight>>
 }

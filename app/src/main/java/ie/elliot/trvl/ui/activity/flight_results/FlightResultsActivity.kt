@@ -18,6 +18,7 @@ package ie.elliot.trvl.ui.activity.flight_results
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import ie.elliot.api.ApiIntentService
 import ie.elliot.trvl.R
 import ie.elliot.trvl.base.TrvlActivity
 import kotlinx.android.synthetic.main.activity_flight_results.*
@@ -34,5 +35,7 @@ internal class FlightResultsActivity : TrvlActivity() {
 
         rvFlightsResults.layoutManager = LinearLayoutManager(this)
         rvFlightsResults.adapter = FlightResultsAdapter()
+
+        ApiIntentService.getAllFlights(this)
     }
 }

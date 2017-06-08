@@ -27,27 +27,30 @@ import java.util.*
 @RealmModule(library = true, allClasses = true)
 class ApiRealmModule
 
-open class Airport(@PrimaryKey
-                   var icao: String = "",
-                   var iata: String = "",
-                   var name: String = "",
-                   var latitude: Double = 0.0,
-                   var longitude: Double = 0.0,
+open class Airport(
+        @PrimaryKey
+        var icao: String = "",
+        var iata: String = "",
+        var name: String = "",
+        var latitude: Double = 0.0,
+        var longitude: Double = 0.0,
         // TODO : Elliot -> Test data
-                   var price: String = "€321.30",
+        var price: String = "€321.30",
         // TODO : Elliot -> Test data
-                   var flightTime: String = "18h 13m") : RealmObject()
+        var flightTime: String = "18h 13m") : RealmObject()
 
-open class FlightResult(@PrimaryKey
-                        var id: String = "",
-                        var airline: Airline = Airline(),
-                        var price: String = "",
-                        var departAt: Long = 0,
-                        var arriveAt: Long = 0,
-                        var flightTime: String = "",
-                        var stopCount: Int = 0) : RealmObject()
+open class Flight(
+        @PrimaryKey
+        var id: String = "",
+        var airline: Airline? = null,
+        var price: String = "",
+        var departAt: Long = 0,
+        var arriveAt: Long = 0,
+        var flightTime: String = "",
+        var stopCount: Int = 0) : RealmObject()
 
-open class Airline(@PrimaryKey
-                   var id: String = "",
-                   var logo: String = "",
-                   var name: String = "") : RealmObject()
+open class Airline(
+        @PrimaryKey
+        var id: String = "",
+        var logo: String = "",
+        var name: String = "") : RealmObject()

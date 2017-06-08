@@ -24,7 +24,7 @@ import com.squareup.moshi.Types
 import ie.elliot.api.Extensions.rawJsonToString
 import ie.elliot.api.model.Airline
 import ie.elliot.api.model.Airport
-import ie.elliot.api.model.FlightResult
+import ie.elliot.api.model.Flight
 import io.reactivex.schedulers.Schedulers
 import io.realm.Realm
 import timber.log.Timber
@@ -36,10 +36,26 @@ import timber.log.Timber
 class ApiIntentService : IntentService("ApiIntentService") {
     companion object {
         private val GET_AIRPORTS = "get_airports"
+        private val GET_AIRLINES = "get_airlines"
+        private val GET_FLIGHTS = "get_flights"
 
         fun getAllAirports(context: Context) {
             Intent(context, ApiIntentService::class.java).apply {
                 putExtra(GET_AIRPORTS, true)
+                context.startService(this)
+            }
+        }
+
+        fun getAllAirlies(context: Context) {
+            Intent(context, ApiIntentService::class.java).apply {
+                putExtra(GET_AIRLINES, true)
+                context.startService(this)
+            }
+        }
+
+        fun getAllFlights(context: Context) {
+            Intent(context, ApiIntentService::class.java).apply {
+                putExtra(GET_FLIGHTS, true)
                 context.startService(this)
             }
         }
@@ -55,7 +71,7 @@ class ApiIntentService : IntentService("ApiIntentService") {
                     .adapter<List<Airline>>(Types.newParameterizedType(List::class.java, Airline::class.java))
                     .fromJson(context.rawJsonToString(R.raw.test_airlines))
             val flightResults = ApiClient.moshi
-                    .adapter<List<FlightResult>>(Types.newParameterizedType(List::class.java, FlightResult::class.java))
+                    .adapter<List<Flight>>(Types.newParameterizedType(List::class.java, Flight::class.java))
                     .fromJson(context.rawJsonToString(R.raw.test_flight_results))
 
 
@@ -72,22 +88,71 @@ class ApiIntentService : IntentService("ApiIntentService") {
     override fun onHandleIntent(intent: Intent?) {
         if (intent == null) return
         if (intent.getBooleanExtra(GET_AIRPORTS, false)) {
-            ApiClient.instance()
-                    .getAirports()
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(Schedulers.io())
-                    .subscribe({
-                        airports ->
-                        Timber.i("getAirports : onNext -> count = ${airports.size}")
-                        Realm.getDefaultInstance().run {
-                            executeTransaction {
-                                insertOrUpdate(airports)
-                            }
-                        }
-                    }, {
-                        error ->
-                        Timber.e("getAirports : onError -> ${Log.getStackTraceString(error)}")
-                    })
+            getAirports()
+        } else if (intent.getBooleanExtra(GET_AIRLINES, false)) {
+            getAirlines()
+        } else if (intent.getBooleanExtra(GET_FLIGHTS, false)) {
+            getFlights()
         }
+    }
+
+    private fun getAirports() {
+        ApiClient.instance()
+                .getAirports()
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
+                .subscribe({
+                    airports ->
+                    Timber.i("getAirports : onNext -> count = ${airports.size}")
+                    Realm.getDefaultInstance().run {
+                        executeTransaction {
+                            insertOrUpdate(airports)
+                        }
+                        close()
+                    }
+                }, {
+                    error ->
+                    Timber.e("getAirports : onError -> ${Log.getStackTraceString(error)}")
+                })
+    }
+
+    private fun getAirlines() {
+        ApiClient.instance()
+                .getAirlines()
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
+                .subscribe({
+                    airlines ->
+                    Timber.i("getAirlines : onNext -> count = ${airlines.size}")
+                    Realm.getDefaultInstance().run {
+                        executeTransaction {
+                            insertOrUpdate(airlines)
+                        }
+                        close()
+                    }
+                }, {
+                    error ->
+                    Timber.e("getAirlines : onError -> ${Log.getStackTraceString(error)}")
+                })
+    }
+
+    private fun getFlights() {
+        ApiClient.instance()
+                .getFlights()
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
+                .subscribe({
+                    flights ->
+                    Timber.i("getFlights : onNext -> count = ${flights.size}")
+                    Realm.getDefaultInstance().run {
+                        executeTransaction {
+                            insertOrUpdate(flights)
+                        }
+                        close()
+                    }
+                }, {
+                    error ->
+                    Timber.e("getFlights : onError -> ${Log.getStackTraceString(error)}")
+                })
     }
 }
