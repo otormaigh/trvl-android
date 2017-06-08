@@ -37,8 +37,6 @@ internal class HomeActivity : TrvlActivity(), View.OnClickListener {
         avDestination.setOnClickListener(this)
         avOrigin.setOnClickListener(this)
         btnSearch.setOnClickListener(this)
-
-        ApiIntentService.getAllAirports(this)
     }
 
     override fun onClick(view: View) {

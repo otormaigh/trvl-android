@@ -28,7 +28,7 @@ import java.util.*
 class ApiRealmModule
 
 open class Airport(@PrimaryKey
-                   var id: String = "",
+                   var icao: String = "",
                    var iata: String = "",
                    var name: String = "",
                    var latitude: Double = 0.0,

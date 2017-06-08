@@ -26,5 +26,5 @@ import retrofit2.http.GET
  */
 internal interface ApiService {
     @GET("airports/")
-    fun getAirports(): Observable<Airport>
+    fun getAirports(): Observable<List<Airport>>
 }

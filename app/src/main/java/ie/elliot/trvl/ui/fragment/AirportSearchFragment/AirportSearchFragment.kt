@@ -22,6 +22,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import ie.elliot.api.ApiIntentService
 import ie.elliot.trvl.R
 import ie.elliot.api.model.Airport
 import io.realm.Realm
@@ -58,6 +59,8 @@ internal class AirportSearchFragment : Fragment() {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        ApiIntentService.getAllAirports(activity)
+
         if (arguments.getBoolean(DESTINATION)) {
             etSearch.setHint(R.string.where_to)
         } else {

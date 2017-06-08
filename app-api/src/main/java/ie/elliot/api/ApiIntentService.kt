@@ -78,6 +78,7 @@ class ApiIntentService : IntentService("ApiIntentService") {
                     .observeOn(Schedulers.io())
                     .subscribe({
                         airports ->
+                        Timber.i("getAirports : onNext -> count = ${airports.size}")
                         Realm.getDefaultInstance().run {
                             executeTransaction {
                                 insertOrUpdate(airports)
