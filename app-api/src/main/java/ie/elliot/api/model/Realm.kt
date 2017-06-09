@@ -42,12 +42,12 @@ open class Airport(
 open class Flight(
         @PrimaryKey
         var id: String = "",
-        var airline: Airline? = null,
+        var airline: Airline = Airline(),
         var price: String = "",
-        var departAt: Long = 0,
-        var arriveAt: Long = 0,
-        var flightTime: String = "",
-        var stopCount: Int = 0) : RealmObject()
+        var depart_at: String = "",
+        var arrive_at: String = "",
+        var flight_time: String = "",
+        var stop_count: Int = 0) : RealmObject()
 
 open class Airline(
         @PrimaryKey

@@ -25,6 +25,8 @@ import ie.elliot.trvl.R
 import io.realm.Realm
 import io.realm.RealmRecyclerViewAdapter
 import kotlinx.android.synthetic.main.list_item_flight_result.view.*
+import java.text.NumberFormat
+import java.util.*
 
 /**
  * @author Elliot Tormey
@@ -46,14 +48,14 @@ internal class FlightResultsAdapter
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(flight: Flight?) {
             if (flight != null) {
-                itemView.tvAirlineName.text = flight.airline?.name
+                itemView.tvAirlineName.text = flight.airline.name
                 itemView.tvPrice.text = flight.price
                 // TODO : Elliot -> Convert timestamp to hh:mmZ e.g. 18:30 IST
-                // itemView.tvDepartAt.text = flight.departAt
-                // itemView.tvArriveAt.text = flight.arriveAt
-                itemView.tvFlightTime.text = flight.flightTime
+                itemView.tvDepartAt.text = flight.depart_at
+                itemView.tvArriveAt.text = flight.arrive_at
+                itemView.tvFlightTime.text = flight.flight_time
 
-                val stopCount = itemView.resources.getQuantityString(R.plurals.num_stop, flight.stopCount)
+                val stopCount = itemView.resources.getQuantityString(R.plurals.num_stop, flight.stop_count)
                 itemView.tvStops.text = stopCount
             }
         }
