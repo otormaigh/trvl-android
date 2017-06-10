@@ -16,18 +16,36 @@ android {
         sputnik.versionCode 1
         sputnik.versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        sputnik.appName('TRVL')
+        sputnik.apkName('${appName}-${versionName}')
+    }
+
+    signingConfigs {
+        debug {
+            storeFile file("$DEBUG_KEYSTORE_PATH")
+        }
+        release {
+            storeFile file("$TRVL_KEY_STORE_PATH")
+            storePassword "$TRVL_KEY_STORE_PASSWORD"
+            keyAlias "$TRVL_KEY_STORE_ALIAS"
+            keyPassword "$TRVL_KEY_PASSWORD"
+        }
     }
 
     buildTypes {
         debug {
+            signingConfig signingConfigs.debug
             applicationIdSuffix ".debug"
         }
         qa {
+            initWith debug
             applicationIdSuffix ".qa"
             minifyEnabled true
             shrinkResources true
         }
         release {
+            signingConfig signingConfigs.release
             minifyEnabled true
             shrinkResources true
         }
