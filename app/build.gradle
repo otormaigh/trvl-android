@@ -3,7 +3,6 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'realm-android'
 apply plugin: 'com.tapadoo.android.sputnik'
-sputnik.enableQuality(false)
 
 android {
     compileSdkVersion rootProject.ext.compileSdk
@@ -51,6 +50,10 @@ android {
             minifyEnabled true
             shrinkResources true
         }
+    }
+
+    lintOptions {
+        ignore 'UnusedResources'
     }
 }
 
