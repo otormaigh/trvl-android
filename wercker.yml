@@ -1,4 +1,4 @@
-box: otormaigh/android-pipelines
+box: otormaigh/android-docker
 build:
   steps:
     - script:
