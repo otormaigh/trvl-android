@@ -29,18 +29,18 @@ import kotlinx.android.synthetic.main.airport_item_view.view.*
  * @since 04/06/2017
  */
 class AirportView : LinearLayout {
-    var airport: Airport = Airport()
-        get() = airport
+    var airport: Airport? = null
         set(airport) {
-            field = airport
-            showHint = false
-            tvLocation.text = airport.name
-            tvAirport.text = airport.iata
+            if (airport != null) {
+                field = airport
+                showHint = false
+                tvLocation.text = airport.name
+                tvAirport.text = airport.iata
+            }
         }
 
     @StringRes
     var hint: Int = 0
-        get() = hint
         set(hint) {
             field = hint
             showHint = true
@@ -48,7 +48,6 @@ class AirportView : LinearLayout {
         }
 
     private var showHint: Boolean = true
-        get() = showHint
         set(showHint) {
             field = showHint
             if (showHint) {

@@ -33,12 +33,9 @@ android {
     }
 
     buildTypes {
-        debug {
-        }
-        qa {
-        }
-        release {
-        }
+        debug {}
+        qa {}
+        release {}
     }
 
     lintOptions {
