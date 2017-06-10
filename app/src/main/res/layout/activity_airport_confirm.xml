@@ -132,7 +132,9 @@
             android:id="@+id/tvClassTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
+            android:layout_toEndOf="@+id/tvPassengers"
+            android:layout_toStartOf="@+id/tvStops"
+            android:gravity="center_horizontal"
             android:text="@string/airline_class"
             android:textColor="?android:attr/textColorSecondary" />
 
@@ -141,7 +143,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvClassTitle"
-            android:layout_centerHorizontal="true"
+            android:layout_toEndOf="@+id/tvPassengers"
+            android:layout_toStartOf="@+id/tvStops"
+            android:gravity="center_horizontal"
             android:textColor="?android:attr/textColorPrimary"
             tools:text="Economy" />
 

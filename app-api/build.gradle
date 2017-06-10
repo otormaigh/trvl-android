@@ -29,11 +29,10 @@ def retrofit = '2.3.0'
 def okHttp = '3.8.0'
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
+    androidTestImplementation("com.android.support.test.espresso:espresso-core:${rootProject.ext.espresso_core}", {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-
-    testImplementation 'junit:junit:4.12'
+    testImplementation "junit:junit:${rootProject.ext.junit}"
 
     // Android support
     implementation "com.android.support:support-annotations:${rootProject.ext.android_support}"

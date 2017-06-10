@@ -8,7 +8,7 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:3.0.0-alpha3'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath 'io.realm:realm-gradle-plugin:3.3.1'
+        classpath 'io.realm:realm-gradle-plugin:3.3.2'
         classpath 'com.tapadoo.android:sputnik:0.9.0'
     }
 }
@@ -32,5 +32,9 @@ ext {
     targetSdk = 25
 
     // Libraries
-    android_support = '25.3.1'
+    android_support = '25.4.0'
+
+    // Test libs
+    espresso_core = '2.2.2'
+    junit = '4.12'
 }
