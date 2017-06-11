@@ -16,4 +16,15 @@
 
 <resources>
     <string name="app_name">app-ui</string>
+
+    <!-- passenger_view -->
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="first_name">First name</string>
+    <string name="last_name">Last name</string>
+    <string name="date_of_birth">Date of birth</string>
+    <string name="nationality">Nationality</string>
+    <string name="passenger_number">Passenger no.</string>
+    <string name="exiry_date">Expiry date</string>
+    <string name="save_these_details_for_later">Save these details for later</string>
 </resources>

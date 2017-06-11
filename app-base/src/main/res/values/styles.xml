@@ -29,4 +29,13 @@
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">1dp</item>
     </style>
+
+    <style name="AppTheme.EditText">
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+        <item name="android:textColorHint">?android:attr/textColorSecondary</item>
+    </style>
+
+    <style name="AppTheme.TextView">
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+    </style>
 </resources>

@@ -35,7 +35,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:textColor="?android:attr/textColorPrimary"
             tools:text="Where to?" />
     </LinearLayout>
 
@@ -51,7 +50,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:textColor="?android:attr/textColorPrimary"
             tools:text="New York" />
 
         <android.support.v4.widget.Space style="@style/Space.Horizontal" />
@@ -61,7 +59,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:textColor="?android:attr/textColorPrimary"
             tools:text="JFK" />
     </LinearLayout>
 </FrameLayout>

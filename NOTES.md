@@ -2,6 +2,7 @@
 * Transition between HomeActivity and AirportSearchFragment
 * Filterable Realm RecyclerView in AirportSearchAdapter
 * Activity/Fragment transition animation
+* Take picture of passport and fill PassengerView
 
 ## FlightResults
 Activity make call to 'ApiIntentService' with some parameter to make an API call. Data gets returned
