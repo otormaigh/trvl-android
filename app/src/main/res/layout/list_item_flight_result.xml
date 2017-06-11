@@ -44,7 +44,6 @@
             android:layout_gravity="center_vertical"
             android:layout_margin="8dp"
             android:background="@android:color/transparent"
-            android:textColor="?android:attr/textColorPrimary"
             tools:text="Swiss Air" />
 
         <android.support.v4.widget.Space style="@style/Space.Horizontal" />
@@ -56,7 +55,6 @@
             android:layout_gravity="center_vertical"
             android:layout_margin="8dp"
             android:background="@android:color/transparent"
-            android:textColor="?android:attr/textColorPrimary"
             tools:text="€123" />
     </LinearLayout>
 
@@ -72,7 +70,6 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:background="@android:color/transparent"
-            android:textColor="?android:attr/textColorPrimary"
             tools:text="8:35 BOM" />
 
         <TextView
@@ -81,7 +78,6 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:background="@android:color/transparent"
-            android:textColor="?android:attr/textColorPrimary"
             tools:text="14:25 IST" />
 
         <android.support.v4.widget.Space style="@style/Space.Horizontal" />
@@ -93,7 +89,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:textColor="?android:attr/textColorPrimary"
             tools:text="11h 20m" />
 
         <android.support.v4.widget.Space style="@style/Space.Horizontal" />
@@ -103,7 +98,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:textColor="?android:attr/textColorPrimary"
             tools:text="1 Stop" />
     </LinearLayout>
 </LinearLayout>

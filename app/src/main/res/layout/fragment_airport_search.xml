@@ -26,9 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:hint="@string/where_to"
-        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-        android:textColor="?android:attr/textColorPrimary"
-        android:textColorHint="?android:attr/textColorSecondary" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline"/>
 
     <TextView
         android:layout_width="wrap_content"
