@@ -62,6 +62,7 @@ dependencies {
     androidTestImplementation("com.android.support.test.espresso:espresso-core:${rootProject.ext.espresso_core}", {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+    androidTestImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:0.16'
     testImplementation "junit:junit:${rootProject.ext.junit}"
 
     // Android support
