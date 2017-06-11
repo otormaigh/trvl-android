@@ -15,18 +15,14 @@
   -->
 
 <resources>
+    <!-- activity_flight_results -->
     <plurals name="num_stop">
-        <item quantity="zero">Non-Stop</item>
         <item quantity="one">%d Stop</item>
-        <item quantity="few">%d Stops</item>
-        <item quantity="other">%d Stop</item>
+        <item quantity="other">%d other</item>
     </plurals>
 
-    <!-- activity_flight_results -->
     <plurals name="num_result">
-        <item quantity="zero">No results</item>
         <item quantity="one">%d result</item>
-        <item quantity="few">%d results</item>
         <item quantity="other">%d results</item>
     </plurals>
 </resources>

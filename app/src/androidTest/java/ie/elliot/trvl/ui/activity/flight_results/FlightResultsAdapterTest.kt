@@ -18,13 +18,19 @@ package ie.elliot.trvl.ui.activity.flight_results
 import android.os.Handler
 import android.os.Looper
 import android.support.test.InstrumentationRegistry
+import android.support.test.espresso.Espresso.onView
+import android.support.test.espresso.assertion.ViewAssertions.matches
+import android.support.test.espresso.matcher.ViewMatchers.withText
+import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import ie.elliot.api.model.Airline
 import ie.elliot.api.model.ApiRealmModule
 import ie.elliot.api.model.Flight
+import ie.elliot.trvl.R
 import ie.elliot.trvl.test_helper.Android
+import ie.elliot.trvl.test_helper.RecyclerViewMatcher
 import io.realm.Realm
 import org.junit.Before
 import org.junit.Test
@@ -34,6 +40,7 @@ import io.realm.RealmRecyclerViewAdapter
 import kotlinx.coroutines.experimental.launch
 import org.junit.After
 import org.junit.Assert.*
+import org.junit.Rule
 
 /**
  * Android test for [FlightResultsAdapter] class. Because the adapter is using the [RealmRecyclerViewAdapter],
@@ -51,8 +58,21 @@ import org.junit.Assert.*
 @Suppress("EXPERIMENTAL_FEATURE_WARNING")
 @RunWith(AndroidJUnit4::class)
 internal class FlightResultsAdapterTest {
+    private companion object {
+        @get:Rule
+        val activityTestRule = ActivityTestRule<FlightResultsActivity>(FlightResultsActivity::class.java)
+
+        fun withRecyclerView(recyclerViewId: Int): RecyclerViewMatcher {
+            return RecyclerViewMatcher(recyclerViewId)
+        }
+
+        fun withRecyclerView(recyclerView: RecyclerView): RecyclerViewMatcher {
+            return RecyclerViewMatcher(recyclerView.id)
+        }
+    }
+
     private val mockContext by lazy { InstrumentationRegistry.getTargetContext().applicationContext }
-    private val mockRecyclerView by lazy { RecyclerView(mockContext) }
+    private val mockRecyclerView: RecyclerView by lazy { activityTestRule.activity.findViewById(R.id.rvFlightsResults) as RecyclerView }
     private val flightResultAdapter by lazy { FlightResultsAdapter() }
     private val mockRealmConfig by lazy {
         RealmConfiguration.Builder()
@@ -65,12 +85,13 @@ internal class FlightResultsAdapterTest {
 
     @Before
     fun setUp() {
-        Realm.setDefaultConfiguration(mockRealmConfig)
-
+        activityTestRule.launchActivity(null)
         launch(Android) {
+            Realm.setDefaultConfiguration(mockRealmConfig)
+
             mockRecyclerView.adapter = flightResultAdapter
             mockRecyclerView.layoutManager = LinearLayoutManager(mockContext)
-            assertFalse(mockRecyclerView.isAttachedToWindow)
+            assertTrue(mockRecyclerView.isAttachedToWindow)
         }
     }
 
@@ -87,7 +108,6 @@ internal class FlightResultsAdapterTest {
     fun testDefaults() {
         launch(Android) {
             assertEquals(0, flightResultAdapter.itemCount)
-            assertEquals(0, mockRecyclerView.childCount)
         }
     }
 
@@ -96,23 +116,32 @@ internal class FlightResultsAdapterTest {
         launch(Android) {
             Handler(Looper.getMainLooper()).post {
                 assertEquals(0, flightResultAdapter.itemCount)
-                assertEquals(0, mockRecyclerView.childCount)
                 realmInsertTestData()
 
                 // Sleep for a bit so the async query can update.
                 Thread.sleep(100)
                 assertEquals(2, flightResultAdapter.itemCount)
+
             }
         }
+        onView(withRecyclerView(mockRecyclerView).atPositionOnView(0, R.id.tvStops)).check(matches(withText(R.string.non_stop)))
+
+        onView(withRecyclerView(mockRecyclerView).atPositionOnView(1, R.id.tvAirlineName)).check(matches(withText("Air New Zealand")))
+        onView(withRecyclerView(mockRecyclerView).atPositionOnView(1, R.id.tvDepartAt)).check(matches(withText("1969-07-16 13:32:00Z")))
+        onView(withRecyclerView(mockRecyclerView).atPositionOnView(1, R.id.tvArriveAt)).check(matches(withText("1969-07-20 20:18:04Z")))
+        onView(withRecyclerView(mockRecyclerView).atPositionOnView(1, R.id.tvFlightTime)).check(matches(withText("13h 40m")))
+        onView(withRecyclerView(mockRecyclerView).atPositionOnView(1, R.id.tvPrice)).check(matches(withText("321")))
+        onView(withRecyclerView(mockRecyclerView).atPositionOnView(1, R.id.tvStops)).check(matches(withText("1 Stop")))
 
         Thread.sleep(500)
     }
 
     private fun realmInsertTestData() {
         Realm.getDefaultInstance().use { realm ->
-            val airline = Airline("1", "swiss_air.png", "Swiss Air")
-            val flightOne = Flight("1", airline, "123", "1969-07-16 13:32:00Z", "1969-07-20 20:18:04Z", "13h 40m", 0)
-            val flightTwo = Flight("2", airline, "321", "1969-07-16 13:32:00Z", "1969-07-20 20:18:04Z", "13h 40m", 0)
+            val airlineOne = Airline("1", "swiss_air.png", "Swiss Air")
+            val airlineTwo = Airline("2", "air_nz.png", "Air New Zealand")
+            val flightOne = Flight("1", airlineOne, "123", "1969-07-16 13:32:00Z", "1969-07-20 20:18:04Z", "13h 40m", 0)
+            val flightTwo = Flight("2", airlineTwo, "321", "1969-07-16 13:32:00Z", "1969-07-20 20:18:04Z", "13h 40m", 1)
 
             realm.executeTransaction { realm ->
                 realm.insertOrUpdate(flightOne)

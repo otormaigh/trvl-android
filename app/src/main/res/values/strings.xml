@@ -25,4 +25,5 @@
     <!-- activity_flight_results -->
     <string name="sort">Sort</string>
     <string name="filter">Filter</string>
+    <string name="non_stop">Non-Stop</string>
 </resources>
