@@ -15,23 +15,24 @@
  */
 package ie.elliot.trvl.ui.activity.passenger_detail
 
-import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
-import ie.elliot.trvl.R
-import ie.elliot.trvl.base.TrvlActivity
-import kotlinx.android.synthetic.main.activity_passenger_detail.*
+import android.support.v7.widget.RecyclerView
+import android.view.View
+import android.view.ViewGroup
+import ie.elliot.trvl.ui.view.PassengerView
 
 /**
  * @author Elliot Tormey
  * @since 11/06/2017
  */
-internal class PassengerDetailActivity : TrvlActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_passenger_detail)
-
-        // TODO : Elliot -> Test data
-        rvPassengers.adapter = PassengerDetailAdapter(7)
-        rvPassengers.layoutManager = LinearLayoutManager(this)
+internal class PassengerDetailAdapter(val passengerCount: Int) : RecyclerView.Adapter<PassengerDetailAdapter.ViewHolder>() {
+    override fun onCreateViewHolder(container: ViewGroup, position: Int): ViewHolder {
+        return ViewHolder(PassengerView(container.context))
     }
+
+    override fun onBindViewHolder(viewHolder: ViewHolder?, itemType: Int) {
+    }
+
+    override fun getItemCount(): Int = passengerCount
+
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 }

@@ -13,25 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ie.elliot.trvl.ui.view
 
-import android.content.Context
-import android.widget.LinearLayout
-import ie.elliot.api.model.Passenger
-import ie.elliot.trvl.ui.R
+package ie.elliot.trvl.ui.activity.flight_results
 
 /**
  * @author Elliot Tormey
  * @since 11/06/2017
  */
-class PassengerView(context: Context) : LinearLayout(context) {
-
-    init {
-        LinearLayout.inflate(getContext(), R.layout.passenger_view, this)
-        layoutParams = LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT)
-    }
-
-    fun getPassenger(): Passenger {
-        return Passenger()
-    }
+interface FlightResultsView {
+    fun goToPassengerDetail()
 }

@@ -54,3 +54,21 @@ open class Airline(
         var id: String = "",
         var logo: String = "",
         var name: String = "") : RealmObject()
+
+
+open class Passenger(
+        @PrimaryKey
+        var id: String = "",
+        var gender: Int = -1,
+        var first_name: String = "",
+        var last_name: String = "",
+        var dob: String = "",
+        var nationality: String = "",
+        var passport_number: String = "",
+        var passport_expiry: String = "") : RealmObject() {
+
+    object Gender {
+        val MALE = 0
+        val FEMALE = 1
+    }
+}

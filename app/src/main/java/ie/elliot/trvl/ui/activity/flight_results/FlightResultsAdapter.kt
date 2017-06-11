@@ -32,7 +32,7 @@ import java.util.*
  * @author Elliot Tormey
  * @since 05/06/2017
  */
-internal class FlightResultsAdapter
+internal class FlightResultsAdapter(private val flightResultsView: FlightResultsView)
     : RealmRecyclerViewAdapter<Flight, FlightResultsAdapter.ViewHolder>(Realm.getDefaultInstance().where(Flight::class.java).findAllAsync(), true) {
 
     override fun onBindViewHolder(viewHolder: ViewHolder?, position: Int) {
@@ -57,6 +57,10 @@ internal class FlightResultsAdapter
 
                 val stopCount = itemView.resources.getQuantityString(R.plurals.num_stop, flight.stop_count)
                 itemView.tvStops.text = stopCount
+
+                itemView.setOnClickListener {
+                    flightResultsView.goToPassengerDetail()
+                }
             }
         }
     }
