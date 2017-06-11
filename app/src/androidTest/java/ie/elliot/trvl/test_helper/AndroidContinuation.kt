@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package ie.elliot.trvl.ui.corutine
+package ie.elliot.trvl.test_helper
 
 import android.os.Handler
 import android.os.Looper

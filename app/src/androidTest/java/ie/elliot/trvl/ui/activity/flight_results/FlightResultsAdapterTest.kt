@@ -24,9 +24,8 @@ import android.support.v7.widget.RecyclerView
 import ie.elliot.api.model.Airline
 import ie.elliot.api.model.ApiRealmModule
 import ie.elliot.api.model.Flight
-import ie.elliot.trvl.ui.corutine.Android
+import ie.elliot.trvl.test_helper.Android
 import io.realm.Realm
-import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -34,6 +33,7 @@ import io.realm.RealmConfiguration
 import io.realm.RealmRecyclerViewAdapter
 import kotlinx.coroutines.experimental.launch
 import org.junit.After
+import org.junit.Assert.*
 
 /**
  * Android test for [FlightResultsAdapter] class. Because the adapter is using the [RealmRecyclerViewAdapter],
@@ -70,6 +70,7 @@ internal class FlightResultsAdapterTest {
         launch(Android) {
             mockRecyclerView.adapter = flightResultAdapter
             mockRecyclerView.layoutManager = LinearLayoutManager(mockContext)
+            assertFalse(mockRecyclerView.isAttachedToWindow)
         }
     }
 
@@ -85,7 +86,8 @@ internal class FlightResultsAdapterTest {
     @Test
     fun testDefaults() {
         launch(Android) {
-            assertEquals(flightResultAdapter.itemCount, 0)
+            assertEquals(0, flightResultAdapter.itemCount)
+            assertEquals(0, mockRecyclerView.childCount)
         }
     }
 
@@ -93,14 +95,16 @@ internal class FlightResultsAdapterTest {
     fun testWithData() {
         launch(Android) {
             Handler(Looper.getMainLooper()).post {
-                assertEquals(flightResultAdapter.itemCount, 0)
+                assertEquals(0, flightResultAdapter.itemCount)
+                assertEquals(0, mockRecyclerView.childCount)
                 realmInsertTestData()
 
                 // Sleep for a bit so the async query can update.
                 Thread.sleep(100)
-                assertEquals(flightResultAdapter.itemCount, 2)
+                assertEquals(2, flightResultAdapter.itemCount)
             }
         }
+
         Thread.sleep(500)
     }
 
@@ -114,7 +118,7 @@ internal class FlightResultsAdapterTest {
                 realm.insertOrUpdate(flightOne)
                 realm.insertOrUpdate(flightTwo)
             }
-            assertEquals(realm.where(Flight::class.java).findAll().size, 2)
+            assertEquals(2, realm.where(Flight::class.java).findAll().size)
         }
     }
 }
