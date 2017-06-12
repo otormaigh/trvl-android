@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package ie.elliot.trvl.ui.fragment.AirportSearchFragment
+package ie.elliot.trvl.ui.activity.airport_search
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -25,13 +25,12 @@ import ie.elliot.api.model.Airport
 import io.realm.Realm
 import io.realm.RealmRecyclerViewAdapter
 import kotlinx.android.synthetic.main.list_item_airport.view.*
-import timber.log.Timber
 
 /**
  * @author Elliot Tormey
  * @since 04/06/2017
  */
-internal class AirportSearchAdapter
+internal class AirportSearchAdapter(private val airportSearchView: AirportSearchView)
     : RealmRecyclerViewAdapter<Airport, AirportSearchAdapter.ViewHolder>(Realm.getDefaultInstance().where(Airport::class.java).findAllAsync(), true) {
     override fun onBindViewHolder(viewHolder: ViewHolder?, position: Int) {
         if (data != null) {
@@ -45,17 +44,15 @@ internal class AirportSearchAdapter
 
     override fun getItemCount(): Int = if (data == null) 0 else data!!.size
 
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(airport: Airport) {
             itemView.tvAirport.text = airport.name
             itemView.tvFlightTime.text = airport.flightTime
             itemView.tvPrice.text = airport.price
 
-            itemView.setOnClickListener(this)
-        }
-
-        override fun onClick(view: View) {
-            Timber.i("onClick")
+            itemView.setOnClickListener {
+                airportSearchView.goHome()
+            }
         }
     }
 }

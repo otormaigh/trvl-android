@@ -18,12 +18,12 @@ package ie.elliot.trvl.ui.activity.home
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import ie.elliot.api.ApiIntentService
 import ie.elliot.trvl.R
 import ie.elliot.trvl.base.TrvlActivity
 import ie.elliot.trvl.ui.activity.airport_confirm.AirportConfirmActivity
-import ie.elliot.trvl.ui.fragment.AirportSearchFragment.AirportSearchFragment
+import ie.elliot.trvl.ui.activity.airport_search.AirportSearchActivity
 import kotlinx.android.synthetic.main.activity_home.*
+
 
 /**
  * @author Elliot Tormey
@@ -39,10 +39,16 @@ internal class HomeActivity : TrvlActivity(), View.OnClickListener {
         btnSearch.setOnClickListener(this)
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        startActivity(Intent(this, AirportConfirmActivity::class.java))
+    }
+
     override fun onClick(view: View) {
         when (view.id) {
-            R.id.avDestination -> replaceFrag(AirportSearchFragment.newInstance(view.id))
-            R.id.avOrigin -> replaceFrag(AirportSearchFragment.newInstance(view.id))
+            R.id.avDestination -> AirportSearchActivity.newInstance(this, view.id)
+            R.id.avOrigin -> AirportSearchActivity.newInstance(this, view.id)
             R.id.btnSearch -> startActivity(Intent(this, AirportConfirmActivity::class.java))
         }
     }

@@ -22,6 +22,12 @@
         </activity>
 
         <activity
+            android:name=".SplashActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="ie.elliot.trvl.ui.activity.airport_search.AirportSearchActivity"
+            android:screenOrientation="sensorPortrait" />
+        <activity
             android:name=".ui.activity.airport_confirm.AirportConfirmActivity"
             android:screenOrientation="sensorPortrait" />
         <activity

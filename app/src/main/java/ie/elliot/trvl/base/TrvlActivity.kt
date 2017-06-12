@@ -18,7 +18,6 @@ package ie.elliot.trvl.base
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentTransaction
 import android.support.v7.app.AppCompatActivity
-import ie.elliot.trvl.ui.fragment.AirportSearchFragment.AirportSearchFragment
 
 /**
  * @author Elliot Tormey

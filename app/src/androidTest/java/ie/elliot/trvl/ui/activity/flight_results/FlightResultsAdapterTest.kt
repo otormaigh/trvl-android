@@ -88,6 +88,7 @@ internal class FlightResultsAdapterTest {
         flightResultActivityTestRule.launchActivity(null)
         launch(Android) {
             Realm.setDefaultConfiguration(mockRealmConfig)
+            assertEquals(Realm.getDefaultInstance().configuration, mockRealmConfig)
 
             mockRecyclerView.adapter = flightResultAdapter
             mockRecyclerView.layoutManager = LinearLayoutManager(flightResultActivityTestRule.activity)
