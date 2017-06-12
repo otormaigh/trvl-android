@@ -62,6 +62,9 @@ dependencies {
     androidTestImplementation("com.android.support.test.espresso:espresso-core:${rootProject.ext.espresso_core}", {
         exclude group: 'com.android.support'
     })
+    androidTestImplementation("com.android.support.test.espresso:espresso-intents:${rootProject.ext.espresso_core}", {
+        exclude group: 'com.android.support'
+    })
     androidTestImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:0.16'
     androidTestImplementation 'org.hamcrest:hamcrest-library:1.3'
 

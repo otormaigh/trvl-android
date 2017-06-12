@@ -16,12 +16,14 @@
 
 package ie.elliot.trvl.ui.activity.flight_results
 
+import android.content.Intent
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import ie.elliot.api.model.Flight
 import ie.elliot.trvl.R
+import ie.elliot.trvl.ui.activity.passenger_detail.PassengerDetailActivity
 import io.realm.Realm
 import io.realm.RealmRecyclerViewAdapter
 import kotlinx.android.synthetic.main.list_item_flight_result.view.*
@@ -32,7 +34,7 @@ import java.util.*
  * @author Elliot Tormey
  * @since 05/06/2017
  */
-internal class FlightResultsAdapter(private val flightResultsView: FlightResultsView? = null)
+internal class FlightResultsAdapter(private val flightResultsView: FlightResultsView)
     : RealmRecyclerViewAdapter<Flight, FlightResultsAdapter.ViewHolder>(Realm.getDefaultInstance().where(Flight::class.java).findAllAsync(), true) {
 
     override fun onBindViewHolder(viewHolder: ViewHolder?, position: Int) {
@@ -62,7 +64,7 @@ internal class FlightResultsAdapter(private val flightResultsView: FlightResults
                 }
 
                 itemView.setOnClickListener {
-                    flightResultsView?.goToPassengerDetail()
+                    flightResultsView.goToPassengerDetail()
                 }
             }
         }

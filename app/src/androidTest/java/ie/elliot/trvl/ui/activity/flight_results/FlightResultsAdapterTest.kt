@@ -17,9 +17,12 @@ package ie.elliot.trvl.ui.activity.flight_results
 
 import android.os.Handler
 import android.os.Looper
-import android.support.test.InstrumentationRegistry
 import android.support.test.espresso.Espresso.onView
+import android.support.test.espresso.action.ViewActions.click
 import android.support.test.espresso.assertion.ViewAssertions.matches
+import android.support.test.espresso.intent.Intents
+import android.support.test.espresso.intent.Intents.intended
+import android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent
 import android.support.test.espresso.matcher.ViewMatchers.withText
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
@@ -31,16 +34,14 @@ import ie.elliot.api.model.Flight
 import ie.elliot.trvl.R
 import ie.elliot.trvl.test_helper.Android
 import ie.elliot.trvl.test_helper.RecyclerViewMatcher
+import ie.elliot.trvl.ui.activity.passenger_detail.PassengerDetailActivity
 import io.realm.Realm
-import org.junit.Before
-import org.junit.Test
 import org.junit.runner.RunWith
 import io.realm.RealmConfiguration
 import io.realm.RealmRecyclerViewAdapter
 import kotlinx.coroutines.experimental.launch
-import org.junit.After
+import org.junit.*
 import org.junit.Assert.*
-import org.junit.Rule
 
 /**
  * Android test for [FlightResultsAdapter] class. Because the adapter is using the [RealmRecyclerViewAdapter],
@@ -60,20 +61,19 @@ import org.junit.Rule
 internal class FlightResultsAdapterTest {
     private companion object {
         @get:Rule
-        val activityTestRule = ActivityTestRule<FlightResultsActivity>(FlightResultsActivity::class.java)
+        val flightResultActivityTestRule = ActivityTestRule<FlightResultsActivity>(FlightResultsActivity::class.java)
 
         fun withRecyclerView(recyclerViewId: Int): RecyclerViewMatcher {
             return RecyclerViewMatcher(recyclerViewId)
         }
 
         fun withRecyclerView(recyclerView: RecyclerView): RecyclerViewMatcher {
-            return RecyclerViewMatcher(recyclerView.id)
+            return withRecyclerView(recyclerView.id)
         }
     }
 
-    private val mockContext by lazy { InstrumentationRegistry.getTargetContext().applicationContext }
-    private val mockRecyclerView: RecyclerView by lazy { activityTestRule.activity.findViewById(R.id.rvFlightsResults) as RecyclerView }
-    private val flightResultAdapter by lazy { FlightResultsAdapter() }
+    private val mockRecyclerView: RecyclerView by lazy { flightResultActivityTestRule.activity.findViewById(R.id.rvFlightsResults) as RecyclerView }
+    private val flightResultAdapter by lazy { FlightResultsAdapter(flightResultActivityTestRule.activity) }
     private val mockRealmConfig by lazy {
         RealmConfiguration.Builder()
                 .inMemory()
@@ -85,12 +85,12 @@ internal class FlightResultsAdapterTest {
 
     @Before
     fun setUp() {
-        activityTestRule.launchActivity(null)
+        flightResultActivityTestRule.launchActivity(null)
         launch(Android) {
             Realm.setDefaultConfiguration(mockRealmConfig)
 
             mockRecyclerView.adapter = flightResultAdapter
-            mockRecyclerView.layoutManager = LinearLayoutManager(mockContext)
+            mockRecyclerView.layoutManager = LinearLayoutManager(flightResultActivityTestRule.activity)
             assertTrue(mockRecyclerView.isAttachedToWindow)
         }
     }
@@ -134,6 +134,21 @@ internal class FlightResultsAdapterTest {
         onView(withRecyclerView(mockRecyclerView).atPositionOnView(1, R.id.tvStops)).check(matches(withText("1 Stop")))
 
         Thread.sleep(500)
+    }
+
+    @Test
+    fun testItemClick() {
+        Intents.init()
+        launch(Android) {
+            Handler(Looper.getMainLooper()).post {
+                realmInsertTestData()
+            }
+        }
+        Thread.sleep(100)
+
+        onView(withRecyclerView(mockRecyclerView).atPosition(0)).perform(click())
+        intended(hasComponent(PassengerDetailActivity::class.java.name))
+        Intents.release()
     }
 
     private fun realmInsertTestData() {
