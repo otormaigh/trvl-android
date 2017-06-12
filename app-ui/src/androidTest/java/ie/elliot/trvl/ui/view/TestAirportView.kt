@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package ie.elliot.trvl.ui.view
 
 import android.support.test.InstrumentationRegistry
@@ -23,6 +22,7 @@ import ie.elliot.api.model.Airport
 import ie.elliot.trvl.ui.test.R
 import kotlinx.android.synthetic.main.airport_item_view.view.*
 import org.junit.Assert.assertTrue
+import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -33,8 +33,15 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class TestAirportView {
     private val testContext by lazy { InstrumentationRegistry.getContext() }
-    private val airportView by lazy { AirportView(testContext) }
-    private val airport by lazy { Airport(name = "New York", iata = "JFK") }
+
+    private lateinit var airportView: AirportView
+    private lateinit var airport: Airport
+
+    @Before
+    fun setUp() {
+        airportView = AirportView(testContext)
+        airport = Airport(name = "New York", iata = "JFK")
+    }
 
     @Test
     fun testDefaultValues() {

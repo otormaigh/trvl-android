@@ -45,7 +45,7 @@ dependencies {
     implementation project(":app-api")
 
     androidTestImplementation("com.android.support.test.espresso:espresso-core:${rootProject.ext.espresso_core}", {
-        exclude group: 'com.android.support', module: 'support-annotations'
+        exclude group: 'com.android.support'
     })
     testImplementation "junit:junit:${rootProject.ext.junit}"
 

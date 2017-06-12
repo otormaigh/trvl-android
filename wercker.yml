@@ -1,4 +1,4 @@
-box: otormaigh/android-docker
+box: otormaigh/android-docker:slim
 build:
   steps:
     - script:
