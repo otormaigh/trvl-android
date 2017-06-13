@@ -50,8 +50,8 @@ internal class HomeActivity : TrvlActivity<HomePresenter>(HomePresenter()), View
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
-        avDestination.setOnClickListener(this)
-        avOrigin.setOnClickListener(this)
+        avArrive.setOnClickListener(this)
+        avDepart.setOnClickListener(this)
         btnSearch.setOnClickListener(this)
     }
 
@@ -62,8 +62,8 @@ internal class HomeActivity : TrvlActivity<HomePresenter>(HomePresenter()), View
             if (resultCode == RESULT_OK) {
                 val airport = presenter?.getAirport(data.getStringExtra(AIRPORT_ICAO))
                 when (data.getIntExtra(HINT_RES_ID, 0)) {
-                    avDestination.hint -> avDestination.airport = airport
-                    avOrigin.hint -> avOrigin.airport = airport
+                    avArrive.hint -> avArrive.airport = airport
+                    avDepart.hint -> avDepart.airport = airport
                     else -> Timber.e("hintRes has no match")
                 }
             }
@@ -72,10 +72,10 @@ internal class HomeActivity : TrvlActivity<HomePresenter>(HomePresenter()), View
 
     override fun onClick(view: View) {
         when (view.id) {
-            R.id.avDestination -> AirportSearchActivity.newInstance(this, avDestination.hint)
-            R.id.avOrigin -> AirportSearchActivity.newInstance(this, avOrigin.hint)
+            R.id.avArrive -> AirportSearchActivity.newInstance(this, avArrive.hint)
+            R.id.avDepart -> AirportSearchActivity.newInstance(this, avDepart.hint)
             R.id.btnSearch -> {
-                if (avDestination.airport != null && avOrigin.airport != null) {
+                if (avArrive.airport != null && avDepart.airport != null) {
                     startActivity(Intent(this, AirportConfirmActivity::class.java))
                 }
             }

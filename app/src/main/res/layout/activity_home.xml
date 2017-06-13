@@ -21,13 +21,13 @@
     android:orientation="vertical">
 
     <ie.elliot.trvl.ui.view.AirportView
-        android:id="@+id/avDestination"
+        android:id="@+id/avArrive"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:hint="@string/where_to" />
 
     <ie.elliot.trvl.ui.view.AirportView
-        android:id="@+id/avOrigin"
+        android:id="@+id/avDepart"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:hint="@string/depart_from" />
