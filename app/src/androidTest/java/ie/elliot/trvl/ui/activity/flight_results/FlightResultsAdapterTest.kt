@@ -27,6 +27,7 @@ import android.support.test.runner.AndroidJUnit4
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import ie.elliot.api.model.Airline
+import ie.elliot.api.model.Airport
 import ie.elliot.api.model.ApiRealmModule
 import ie.elliot.api.model.Flight
 import ie.elliot.trvl.R
@@ -158,8 +159,10 @@ internal class FlightResultsAdapterTest {
 
             val airlineOne = Airline("1", "swiss_air.png", "Swiss Air")
             val airlineTwo = Airline("2", "air_nz.png", "Air New Zealand")
-            val flightOne = Flight("1", airlineOne, "123", "KJFK", "EIDW", "1969-07-16 13:32:00Z", "1969-07-20 20:18:04Z", "13h 40m", 0)
-            val flightTwo = Flight("2", airlineTwo, "321", "EIDW", "KJFK", "1969-07-16 13:32:00Z", "1969-07-20 20:18:04Z", "13h 40m", 1)
+            val airportOne = Airport("KJFK", "JFK", "New York", 40.639722, -73.778889)
+            val airportTwo = Airport("EIDW", "DUB", "Dublin", 53.421389, -6.27)
+            val flightOne = Flight("1", airlineOne, "123", airportOne, airportTwo, "1969-07-16 13:32:00Z", "1969-07-20 20:18:04Z", "13h 40m", 0)
+            val flightTwo = Flight("2", airlineTwo, "321", airportTwo, airportOne, "1969-07-16 13:32:00Z", "1969-07-20 20:18:04Z", "13h 40m", 1)
 
             realm.executeTransaction { realm ->
                 realm.insertOrUpdate(flightOne)
