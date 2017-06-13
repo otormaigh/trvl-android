@@ -20,13 +20,14 @@ import android.support.v7.widget.LinearLayoutManager
 import ie.elliot.trvl.R
 import ie.elliot.trvl.base.TrvlActivity
 import ie.elliot.trvl.base.TrvlPresenter
+import ie.elliot.trvl.base.TrvlView
 import kotlinx.android.synthetic.main.activity_passenger_detail.*
 
 /**
  * @author Elliot Tormey
  * @since 11/06/2017
  */
-internal class PassengerDetailActivity : TrvlActivity<TrvlPresenter>() {
+internal class PassengerDetailActivity : TrvlActivity<TrvlPresenter<TrvlView>>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_passenger_detail)

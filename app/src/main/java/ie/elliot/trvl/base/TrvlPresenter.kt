@@ -19,7 +19,7 @@ package ie.elliot.trvl.base
  * @author Elliot Tormey
  * @since 13/06/2017
  */
-internal open class TrvlPresenter {
+internal open class TrvlPresenter<out V: TrvlView>(protected val view: V? = null) {
     protected val model by lazy { TrvlModel() }
 
     open fun onPause() {

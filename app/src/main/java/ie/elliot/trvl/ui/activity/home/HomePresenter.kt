@@ -17,14 +17,19 @@ package ie.elliot.trvl.ui.activity.home
 
 import ie.elliot.api.model.Airport
 import ie.elliot.trvl.base.TrvlPresenter
+import ie.elliot.trvl.base.TrvlView
 
 /**
  * @author Elliot Tormey
  * @since 13/06/2017
  */
-internal class HomePresenter : TrvlPresenter() {
+internal class HomePresenter : TrvlPresenter<TrvlView>() {
 
     fun getAirport(airportIcao: String): Airport {
-        return model.getAirportName(airportIcao)
+        return model.getAirport(airportIcao)
+    }
+
+    fun getBookingId(arriveAirport: String, departAirport: String): Long {
+        return model.createBooking(arriveAirport, departAirport)
     }
 }

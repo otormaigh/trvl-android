@@ -31,7 +31,7 @@ import kotlinx.android.synthetic.main.activity_flight_results.*
  * @author Elliot Tormey
  * @since 05/06/2017
  */
-internal class FlightResultsActivity : TrvlActivity<TrvlPresenter>(), FlightResultsView {
+internal class FlightResultsActivity : TrvlActivity<TrvlPresenter<FlightResultsView>>(), FlightResultsView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_flight_results)

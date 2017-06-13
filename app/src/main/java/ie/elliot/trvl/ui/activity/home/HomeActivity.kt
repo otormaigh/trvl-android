@@ -31,7 +31,7 @@ import timber.log.Timber
  * @author Elliot Tormey
  * @since 04/06/2017
  */
-internal class HomeActivity : TrvlActivity<HomePresenter>(HomePresenter()), View.OnClickListener {
+internal class HomeActivity : TrvlActivity<HomePresenter>(), View.OnClickListener {
     companion object {
         private val HINT_RES_ID = "hint_res_id"
         private val AIRPORT_ICAO = "airport_icao"
@@ -49,6 +49,7 @@ internal class HomeActivity : TrvlActivity<HomePresenter>(HomePresenter()), View
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
+        presenter = HomePresenter()
 
         avArrive.setOnClickListener(this)
         avDepart.setOnClickListener(this)
@@ -76,7 +77,8 @@ internal class HomeActivity : TrvlActivity<HomePresenter>(HomePresenter()), View
             R.id.avDepart -> AirportSearchActivity.newInstance(this, avDepart.hint)
             R.id.btnSearch -> {
                 if (avArrive.airport != null && avDepart.airport != null) {
-                    startActivity(Intent(this, AirportConfirmActivity::class.java))
+                    val bookingId = presenter?.getBookingId(avArrive.airport!!.icao, avDepart.airport!!.icao) as Long
+                    AirportConfirmActivity.newInstance(this, bookingId)
                 }
             }
         }

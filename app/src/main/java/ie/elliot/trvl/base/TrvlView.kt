@@ -14,14 +14,10 @@
  * limitations under the License.
  */
 
-package ie.elliot.trvl.ui.activity.flight_results
-
-import ie.elliot.trvl.base.TrvlView
+package ie.elliot.trvl.base
 
 /**
  * @author Elliot Tormey
- * @since 11/06/2017
+ * @since 13/06/2017
  */
-internal interface FlightResultsView : TrvlView {
-    fun goToPassengerDetail()
-}
+internal interface TrvlView

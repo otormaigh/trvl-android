@@ -14,14 +14,15 @@
  * limitations under the License.
  */
 
-package ie.elliot.trvl.ui.activity.flight_results
+package ie.elliot.trvl.ui.activity.airport_confirm
 
+import ie.elliot.api.model.Booking
 import ie.elliot.trvl.base.TrvlView
 
 /**
  * @author Elliot Tormey
- * @since 11/06/2017
+ * @since 13/06/2017
  */
-internal interface FlightResultsView : TrvlView {
-    fun goToPassengerDetail()
+internal interface AirportConfirmView: TrvlView {
+    fun setBookingToViews(booking: Booking)
 }

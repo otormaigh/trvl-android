@@ -23,9 +23,7 @@ import android.support.v7.app.AppCompatActivity
  * @author Elliot Tormey
  * @since 04/06/2017
  */
-internal open class TrvlActivity<P: TrvlPresenter>(protected val presenter: P?) : AppCompatActivity() {
-    constructor(): this(null)
-
+internal open class TrvlActivity<P: TrvlPresenter<TrvlView>>(protected var presenter: P? = null) : AppCompatActivity() {
     override fun onPause() {
         super.onPause()
         presenter?.onPause()

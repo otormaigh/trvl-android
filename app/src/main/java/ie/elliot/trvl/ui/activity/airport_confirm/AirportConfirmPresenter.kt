@@ -14,14 +14,17 @@
  * limitations under the License.
  */
 
-package ie.elliot.trvl.ui.activity.flight_results
+package ie.elliot.trvl.ui.activity.airport_confirm
 
-import ie.elliot.trvl.base.TrvlView
+import ie.elliot.trvl.base.TrvlPresenter
 
 /**
  * @author Elliot Tormey
- * @since 11/06/2017
+ * @since 13/06/2017
  */
-internal interface FlightResultsView : TrvlView {
-    fun goToPassengerDetail()
+internal class AirportConfirmPresenter(view: AirportConfirmView): TrvlPresenter<AirportConfirmView>(view) {
+
+    fun getBooking(bookingId: Long) {
+        view?.setBookingToViews(model.getBookingById(bookingId))
+    }
 }

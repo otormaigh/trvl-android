@@ -30,6 +30,9 @@ import java.util.*
 class ApiRealmModule
 
 object RealmKey {
+    object Common {
+        val ID = "id"
+    }
     object Airport {
         val ICAO = "icao"
     }
@@ -52,8 +55,10 @@ open class Flight(
         var id: String = "",
         var airline: Airline = Airline(),
         var price: String = "",
-        var depart_airport: String = "",
-        var arrive_airport: String = "",
+        // TODO: Elliot -> Moshi converter to read/write this as 'id' between API
+        var depart_airport: Airport = Airport(),
+        // TODO: Elliot -> Moshi converter to read/write this as 'id' between API
+        var arrive_airport: Airport = Airport(),
         var depart_at: String = "",
         var arrive_at: String = "",
         var flight_time: String = "",
@@ -84,6 +89,7 @@ open class Passenger(
 
 open class Booking(
         @PrimaryKey
-        var id: Long = System.currentTimeMillis(),
-        var flight: String = "",
+        var id: Long = 0,
+        // TODO: Elliot -> Moshi converter to read/write this as 'id' between API
+        var flight: Flight = Flight(),
         var in_progress: Boolean = true) : RealmObject()

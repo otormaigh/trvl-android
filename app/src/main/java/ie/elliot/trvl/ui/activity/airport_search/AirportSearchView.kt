@@ -16,11 +16,13 @@
 
 package ie.elliot.trvl.ui.activity.airport_search
 
+import ie.elliot.trvl.base.TrvlView
+
 /**
  * @author Elliot Tormey
  * @since 12/06/2017
  */
 
-internal interface AirportSearchView {
+internal interface AirportSearchView: TrvlView {
     fun goHome(airportIcao: String)
 }

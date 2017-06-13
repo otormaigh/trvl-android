@@ -31,7 +31,7 @@ import timber.log.Timber
  * @author Elliot Tormey
  * @since 04/06/2017
  */
-internal class AirportSearchActivity : TrvlActivity<TrvlPresenter>(), AirportSearchView {
+internal class AirportSearchActivity : TrvlActivity<TrvlPresenter<AirportSearchView>>(), AirportSearchView {
     companion object {
         private val HINT_RES_ID = "hint_res_id"
 

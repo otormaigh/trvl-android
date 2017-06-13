@@ -16,6 +16,8 @@
 package ie.elliot.trvl.base
 
 import ie.elliot.api.model.Airport
+import ie.elliot.api.model.Booking
+import ie.elliot.api.model.Flight
 import ie.elliot.api.model.RealmKey
 import io.realm.Realm
 import timber.log.Timber
@@ -32,12 +34,32 @@ internal class TrvlModel : AutoCloseable {
             return field
         }
 
-    fun getAirportName(icao: String): Airport {
-        return realm.where(Airport::class.java).equalTo(RealmKey.Airport.ICAO, icao).findFirst()
-    }
-
     override fun close() {
         Timber.i("closing model")
         realm.close()
+    }
+
+    fun getBookingById(bookingId: Long): Booking {
+        return realm.where(Booking::class.java).equalTo(RealmKey.Common.ID, bookingId).findFirst()
+    }
+
+    fun createBooking(arriveAirport: String, departAirport: String): Long {
+        val bookingId: Long = System.currentTimeMillis()
+        realm.executeTransaction {
+            // There should only be on 'Booking' object at a time in the Realm.
+            // Delete all before creating a new one.
+            realm.delete(Booking::class.java)
+
+            val booking = Booking(id = bookingId)
+            booking.flight = Flight()
+            booking.flight.arrive_airport = getAirport(arriveAirport)
+            booking.flight.depart_airport = getAirport(departAirport)
+            realm.insertOrUpdate(booking)
+        }
+        return bookingId
+    }
+
+    fun getAirport(icao: String): Airport {
+        return realm.where(Airport::class.java).equalTo(RealmKey.Airport.ICAO, icao).findFirst()
     }
 }
