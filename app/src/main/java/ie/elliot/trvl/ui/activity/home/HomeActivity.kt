@@ -55,15 +55,17 @@ internal class HomeActivity : TrvlActivity<HomePresenter>(HomePresenter()), View
         btnSearch.setOnClickListener(this)
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (resultCode == RESULT_OK) {
-            val airport = presenter?.getAirport(data.getStringExtra(AIRPORT_ICAO))
-            when (data.getIntExtra(HINT_RES_ID, 0)) {
-                avDestination.hint -> avDestination.airport = airport
-                avOrigin.hint -> avOrigin.airport = airport
-                else -> Timber.e("hintRes has no match")
+        if (data != null) {
+            if (resultCode == RESULT_OK) {
+                val airport = presenter?.getAirport(data.getStringExtra(AIRPORT_ICAO))
+                when (data.getIntExtra(HINT_RES_ID, 0)) {
+                    avDestination.hint -> avDestination.airport = airport
+                    avOrigin.hint -> avOrigin.airport = airport
+                    else -> Timber.e("hintRes has no match")
+                }
             }
         }
     }

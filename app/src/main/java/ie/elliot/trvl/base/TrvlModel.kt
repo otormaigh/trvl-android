@@ -25,7 +25,12 @@ import timber.log.Timber
  * @since 13/06/2017
  */
 internal class TrvlModel : AutoCloseable {
-    private val realm by lazy { Realm.getDefaultInstance() }
+    private val realm: Realm = Realm.getDefaultInstance()
+        get() {
+            if (field.isClosed)
+                field = Realm.getDefaultInstance()
+            return field
+        }
 
     fun getAirportName(icao: String): Airport {
         return realm.where(Airport::class.java).equalTo(RealmKey.Airport.ICAO, icao).findFirst()

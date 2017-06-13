@@ -24,6 +24,8 @@ import java.util.*
  * @author Elliot Tormey
  * @since 04/06/2017
  */
+
+
 @RealmModule(library = true, allClasses = true)
 class ApiRealmModule
 
@@ -50,6 +52,8 @@ open class Flight(
         var id: String = "",
         var airline: Airline = Airline(),
         var price: String = "",
+        var depart_airport: String = "",
+        var arrive_airport: String = "",
         var depart_at: String = "",
         var arrive_at: String = "",
         var flight_time: String = "",
@@ -60,7 +64,6 @@ open class Airline(
         var id: String = "",
         var logo: String = "",
         var name: String = "") : RealmObject()
-
 
 open class Passenger(
         @PrimaryKey
@@ -78,3 +81,9 @@ open class Passenger(
         val FEMALE = 1
     }
 }
+
+open class Booking(
+        @PrimaryKey
+        var id: Long = System.currentTimeMillis(),
+        var flight: String = "",
+        var in_progress: Boolean = true) : RealmObject()
