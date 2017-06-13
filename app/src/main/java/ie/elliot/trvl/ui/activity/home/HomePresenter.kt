@@ -13,26 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ie.elliot.trvl.ui.activity.passenger_detail
+package ie.elliot.trvl.ui.activity.home
 
-import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
-import ie.elliot.trvl.R
-import ie.elliot.trvl.base.TrvlActivity
+import ie.elliot.api.model.Airport
 import ie.elliot.trvl.base.TrvlPresenter
-import kotlinx.android.synthetic.main.activity_passenger_detail.*
 
 /**
  * @author Elliot Tormey
- * @since 11/06/2017
+ * @since 13/06/2017
  */
-internal class PassengerDetailActivity : TrvlActivity<TrvlPresenter>() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_passenger_detail)
+internal class HomePresenter : TrvlPresenter() {
 
-        // TODO : Elliot -> Test data
-        rvPassengers.adapter = PassengerDetailAdapter(7)
-        rvPassengers.layoutManager = LinearLayoutManager(this)
+    fun getAirport(airportIcao: String): Airport {
+        return model.getAirportName(airportIcao)
     }
 }

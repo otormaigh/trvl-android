@@ -17,55 +17,46 @@ package ie.elliot.trvl.ui.activity.airport_search
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.annotation.IdRes
 import android.support.v7.widget.LinearLayoutManager
 import ie.elliot.api.ApiIntentService
 import ie.elliot.trvl.R
 import ie.elliot.trvl.base.TrvlActivity
 import ie.elliot.trvl.ui.activity.home.HomeActivity
 import kotlinx.android.synthetic.main.activity_airport_search.*
-import android.app.Activity
-
+import android.support.annotation.StringRes
+import ie.elliot.trvl.base.TrvlPresenter
+import timber.log.Timber
 
 /**
  * @author Elliot Tormey
  * @since 04/06/2017
  */
-internal class AirportSearchActivity : TrvlActivity(), AirportSearchView {
+internal class AirportSearchActivity : TrvlActivity<TrvlPresenter>(), AirportSearchView {
     companion object {
-        private val DESTINATION = "destination"
-        private val ORIGIN = "origin"
+        private val HINT_RES_ID = "hint_res_id"
 
-        fun newInstance(activity: HomeActivity, @IdRes viewRes: Int) {
+        fun newInstance(activity: HomeActivity, @StringRes hintResId: Int) {
             val intent = Intent(activity, AirportSearchActivity::class.java)
-            if (viewRes == R.id.avDestination) {
-                intent.putExtra(DESTINATION, true)
-            } else {
-                intent.putExtra(ORIGIN, true)
-            }
+            intent.putExtra(HINT_RES_ID, hintResId)
             activity.startActivityForResult(intent, 13)
         }
     }
+
+    private val hintResId by lazy { intent.getIntExtra(HINT_RES_ID, 0) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_airport_search)
         ApiIntentService.getAllAirports(this)
 
-        if (intent.getBooleanExtra(DESTINATION, false)) {
-            etSearch.setHint(R.string.where_to)
-        } else {
-            etSearch.setHint(R.string.depart_from)
-        }
+        Timber.e("hintResId = $hintResId")
+        etSearch.setHint(hintResId)
 
         rvAirports.layoutManager = LinearLayoutManager(this)
         rvAirports.adapter = AirportSearchAdapter(this)
     }
 
-    override fun goHome() {
-        val returnIntent = Intent()
-        returnIntent.putExtra("result", 13)
-        setResult(Activity.RESULT_OK, returnIntent)
-        finish()
+    override fun goHome(airportIcao: String) {
+        HomeActivity.resultFromAirportSearch(this, hintResId, airportIcao)
     }
 }

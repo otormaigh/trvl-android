@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package ie.elliot.trvl.ui.activity.airport_search
 
 import android.support.v7.widget.RecyclerView
@@ -51,7 +50,7 @@ internal class AirportSearchAdapter(private val airportSearchView: AirportSearch
             itemView.tvPrice.text = airport.price
 
             itemView.setOnClickListener {
-                airportSearchView.goHome()
+                airportSearchView.goHome(airport.icao)
             }
         }
     }

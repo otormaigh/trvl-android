@@ -21,7 +21,9 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import ie.elliot.api.ApiIntentService
 import ie.elliot.trvl.R
+import ie.elliot.trvl.R.id.rvFlightsResults
 import ie.elliot.trvl.base.TrvlActivity
+import ie.elliot.trvl.base.TrvlPresenter
 import ie.elliot.trvl.ui.activity.passenger_detail.PassengerDetailActivity
 import kotlinx.android.synthetic.main.activity_flight_results.*
 
@@ -29,13 +31,13 @@ import kotlinx.android.synthetic.main.activity_flight_results.*
  * @author Elliot Tormey
  * @since 05/06/2017
  */
-internal class FlightResultsActivity : TrvlActivity(), FlightResultsView {
+internal class FlightResultsActivity : TrvlActivity<TrvlPresenter>(), FlightResultsView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_flight_results)
 
         rvFlightsResults.layoutManager = LinearLayoutManager(this)
-        rvFlightsResults.adapter = FlightResultsAdapter(FlightResultsView@this)
+        rvFlightsResults.adapter = FlightResultsAdapter(FlightResultsView@ this)
 
         ApiIntentService.getAllFlights(this)
     }

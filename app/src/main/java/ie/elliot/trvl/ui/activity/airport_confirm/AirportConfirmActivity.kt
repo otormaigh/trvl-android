@@ -20,6 +20,7 @@ import android.content.Intent
 import android.os.Bundle
 import ie.elliot.trvl.R
 import ie.elliot.trvl.base.TrvlActivity
+import ie.elliot.trvl.base.TrvlPresenter
 import ie.elliot.trvl.ui.activity.flight_results.FlightResultsActivity
 import kotlinx.android.synthetic.main.activity_airport_confirm.*
 
@@ -27,7 +28,7 @@ import kotlinx.android.synthetic.main.activity_airport_confirm.*
  * @author Elliot Tormey
  * @since 04/06/2017
  */
-internal class AirportConfirmActivity : TrvlActivity() {
+internal class AirportConfirmActivity : TrvlActivity<TrvlPresenter>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_airport_confirm)

@@ -13,14 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-package ie.elliot.trvl.ui.activity.airport_search
+package ie.elliot.trvl.base
 
 /**
  * @author Elliot Tormey
- * @since 12/06/2017
+ * @since 13/06/2017
  */
+internal open class TrvlPresenter {
+    protected val model by lazy { TrvlModel() }
 
-internal interface AirportSearchView {
-    fun goHome(airportIcao: String)
+    open fun onPause() {
+        model.close()
+    }
 }

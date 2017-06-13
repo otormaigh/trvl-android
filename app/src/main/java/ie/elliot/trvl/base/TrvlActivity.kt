@@ -23,7 +23,13 @@ import android.support.v7.app.AppCompatActivity
  * @author Elliot Tormey
  * @since 04/06/2017
  */
-internal open class TrvlActivity : AppCompatActivity() {
+internal open class TrvlActivity<P: TrvlPresenter>(protected val presenter: P?) : AppCompatActivity() {
+    constructor(): this(null)
+
+    override fun onPause() {
+        super.onPause()
+        presenter?.onPause()
+    }
 
     protected fun addFrag(fragment: Fragment, addToStack: Boolean = true) {
         val tag = fragment.javaClass.simpleName

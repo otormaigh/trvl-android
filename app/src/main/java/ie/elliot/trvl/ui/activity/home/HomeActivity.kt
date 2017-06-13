@@ -15,21 +15,37 @@
  */
 package ie.elliot.trvl.ui.activity.home
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.support.annotation.StringRes
 import android.view.View
 import ie.elliot.trvl.R
 import ie.elliot.trvl.base.TrvlActivity
 import ie.elliot.trvl.ui.activity.airport_confirm.AirportConfirmActivity
 import ie.elliot.trvl.ui.activity.airport_search.AirportSearchActivity
 import kotlinx.android.synthetic.main.activity_home.*
-
+import timber.log.Timber
 
 /**
  * @author Elliot Tormey
  * @since 04/06/2017
  */
-internal class HomeActivity : TrvlActivity(), View.OnClickListener {
+internal class HomeActivity : TrvlActivity<HomePresenter>(HomePresenter()), View.OnClickListener {
+    companion object {
+        private val HINT_RES_ID = "hint_res_id"
+        private val AIRPORT_ICAO = "airport_icao"
+
+        fun resultFromAirportSearch(activity: AirportSearchActivity, @StringRes hintResId: Int, airportIcao: String) {
+            Intent().apply {
+                putExtra(HINT_RES_ID, hintResId)
+                putExtra(AIRPORT_ICAO, airportIcao)
+                activity.setResult(Activity.RESULT_OK, this)
+            }
+            activity.finish()
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
@@ -39,17 +55,28 @@ internal class HomeActivity : TrvlActivity(), View.OnClickListener {
         btnSearch.setOnClickListener(this)
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        startActivity(Intent(this, AirportConfirmActivity::class.java))
+        if (resultCode == RESULT_OK) {
+            val airport = presenter?.getAirport(data.getStringExtra(AIRPORT_ICAO))
+            when (data.getIntExtra(HINT_RES_ID, 0)) {
+                avDestination.hint -> avDestination.airport = airport
+                avOrigin.hint -> avOrigin.airport = airport
+                else -> Timber.e("hintRes has no match")
+            }
+        }
     }
 
     override fun onClick(view: View) {
         when (view.id) {
-            R.id.avDestination -> AirportSearchActivity.newInstance(this, view.id)
-            R.id.avOrigin -> AirportSearchActivity.newInstance(this, view.id)
-            R.id.btnSearch -> startActivity(Intent(this, AirportConfirmActivity::class.java))
+            R.id.avDestination -> AirportSearchActivity.newInstance(this, avDestination.hint)
+            R.id.avOrigin -> AirportSearchActivity.newInstance(this, avOrigin.hint)
+            R.id.btnSearch -> {
+                if (avDestination.airport != null && avOrigin.airport != null) {
+                    startActivity(Intent(this, AirportConfirmActivity::class.java))
+                }
+            }
         }
     }
 }
