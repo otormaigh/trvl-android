@@ -61,30 +61,6 @@ class ApiIntentService : IntentService("ApiIntentService") {
                 context.startService(this)
             }
         }
-
-        /**
-         * Load any required test data into the Realm.
-         */
-        fun loadTestData(context: Context) {
-            val airports = ApiClient.moshi
-                    .adapter<List<Airport>>(Types.newParameterizedType(List::class.java, Airport::class.java))
-                    .fromJson(context.rawJsonToString(R.raw.test_airports))
-            val airlines = ApiClient.moshi
-                    .adapter<List<Airline>>(Types.newParameterizedType(List::class.java, Airline::class.java))
-                    .fromJson(context.rawJsonToString(R.raw.test_airlines))
-            val flightResults = ApiClient.moshi
-                    .adapter<List<Flight>>(Types.newParameterizedType(List::class.java, Flight::class.java))
-                    .fromJson(context.rawJsonToString(R.raw.test_flight_results))
-
-
-            Realm.getDefaultInstance().run {
-                executeTransaction {
-                    copyToRealmOrUpdate(airports)
-                    copyToRealmOrUpdate(airlines)
-                    copyToRealmOrUpdate(flightResults)
-                }
-            }
-        }
     }
 
     override fun onHandleIntent(intent: Intent?) {

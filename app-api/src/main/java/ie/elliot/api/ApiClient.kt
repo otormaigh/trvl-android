@@ -27,8 +27,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
  * @since 04/06/2017
  */
 internal object ApiClient {
-    val moshi = Moshi.Builder().build()
-
+    private val moshi = Moshi.Builder().build()
     private var apiService: ApiService? = null
 
     fun instance(): ApiService {
