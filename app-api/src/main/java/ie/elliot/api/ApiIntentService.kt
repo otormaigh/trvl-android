@@ -27,6 +27,8 @@ import ie.elliot.api.model.Airport
 import ie.elliot.api.model.Flight
 import io.reactivex.schedulers.Schedulers
 import io.realm.Realm
+import io.realm.RealmModel
+import io.realm.RealmObject
 import timber.log.Timber
 
 /**
@@ -104,11 +106,10 @@ class ApiIntentService : IntentService("ApiIntentService") {
                 .subscribe({
                     airports ->
                     Timber.i("getAirports : onNext -> count = ${airports.size}")
-                    Realm.getDefaultInstance().run {
-                        executeTransaction {
-                            insertOrUpdate(airports)
+                    Realm.getDefaultInstance().use { realm ->
+                        realm.executeTransaction { realm ->
+                            realm.insertOrUpdate(airports)
                         }
-                        close()
                     }
                 }, {
                     error ->
@@ -124,11 +125,10 @@ class ApiIntentService : IntentService("ApiIntentService") {
                 .subscribe({
                     airlines ->
                     Timber.i("getAirlines : onNext -> count = ${airlines.size}")
-                    Realm.getDefaultInstance().run {
-                        executeTransaction {
-                            insertOrUpdate(airlines)
+                    Realm.getDefaultInstance().use { realm ->
+                        realm.executeTransaction { realm ->
+                            realm.insertOrUpdate(airlines)
                         }
-                        close()
                     }
                 }, {
                     error ->
@@ -144,11 +144,10 @@ class ApiIntentService : IntentService("ApiIntentService") {
                 .subscribe({
                     flights ->
                     Timber.i("getFlights : onNext -> count = ${flights.size}")
-                    Realm.getDefaultInstance().run {
-                        executeTransaction {
-                            insertOrUpdate(flights)
+                    Realm.getDefaultInstance().use { realm ->
+                        realm.executeTransaction { realm ->
+                            realm.insertOrUpdate(flights)
                         }
-                        close()
                     }
                 }, {
                     error ->
