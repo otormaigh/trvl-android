@@ -27,6 +27,12 @@ import java.util.*
 @RealmModule(library = true, allClasses = true)
 class ApiRealmModule
 
+object RealmKey {
+    object Airport {
+        val ICAO = "icao"
+    }
+}
+
 open class Airport(
         @PrimaryKey
         var icao: String = "",
