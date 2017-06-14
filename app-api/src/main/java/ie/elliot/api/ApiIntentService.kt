@@ -20,15 +20,10 @@ import android.app.IntentService
 import android.content.Context
 import android.content.Intent
 import android.util.Log
-import com.squareup.moshi.Types
-import ie.elliot.api.Extensions.rawJsonToString
-import ie.elliot.api.model.Airline
-import ie.elliot.api.model.Airport
-import ie.elliot.api.model.Flight
+import ie.elliot.api.model.Booking
+import ie.elliot.api.model.RealmKey
 import io.reactivex.schedulers.Schedulers
 import io.realm.Realm
-import io.realm.RealmModel
-import io.realm.RealmObject
 import timber.log.Timber
 
 /**
@@ -40,6 +35,8 @@ class ApiIntentService : IntentService("ApiIntentService") {
         private val GET_AIRPORTS = "get_airports"
         private val GET_AIRLINES = "get_airlines"
         private val GET_FLIGHTS = "get_flights"
+        private val POST_BOOKING = "post_booking"
+        private val BOOKING_ID = "booking_id"
 
         fun getAllAirports(context: Context) {
             Intent(context, ApiIntentService::class.java).apply {
@@ -61,6 +58,15 @@ class ApiIntentService : IntentService("ApiIntentService") {
                 context.startService(this)
             }
         }
+
+        fun postBooking(context: Context, bookingId: Long) {
+            Timber.e("Intent.postBooking")
+            Intent(context, ApiIntentService::class.java).apply {
+                putExtra(POST_BOOKING, true)
+                putExtra(BOOKING_ID, bookingId)
+                context.startService(this)
+            }
+        }
     }
 
     override fun onHandleIntent(intent: Intent?) {
@@ -71,6 +77,8 @@ class ApiIntentService : IntentService("ApiIntentService") {
             getAirlines()
         } else if (intent.getBooleanExtra(GET_FLIGHTS, false)) {
             getFlights()
+        } else if (intent.getBooleanExtra(POST_BOOKING, false)) {
+            postBooking(intent)
         }
     }
 
@@ -129,5 +137,26 @@ class ApiIntentService : IntentService("ApiIntentService") {
                     error ->
                     Timber.e("getFlights : onError -> ${Log.getStackTraceString(error)}")
                 })
+    }
+
+    private fun postBooking(intent: Intent) {
+        Timber.e("Api.postBooking")
+        val realm = Realm.getDefaultInstance()
+        val bookingId = intent.getLongExtra(BOOKING_ID, 0)
+        if (bookingId != 0L) {
+            val booking = realm.copyFromRealm(realm.where(Booking::class.java).equalTo(RealmKey.Booking.STARTED_AT, bookingId).findFirst())
+
+            ApiClient.instance()
+                    .postBooking(booking)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(Schedulers.io())
+                    .subscribe({
+                        booking ->
+                        Timber.i("postBooking : onNext")
+                    }, {
+                        error ->
+                        Timber.e("postBooking : onError -> ${Log.getStackTraceString(error)}")
+                    })
+        }
     }
 }

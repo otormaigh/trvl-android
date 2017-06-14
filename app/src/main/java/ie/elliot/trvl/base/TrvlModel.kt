@@ -50,10 +50,11 @@ internal class TrvlModel : AutoCloseable {
             // Delete all before creating a new one.
             realm.delete(Booking::class.java)
 
-            val booking = Booking(id = bookingId)
+            val booking = Booking(started_at = bookingId)
             booking.flight = Flight()
             booking.flight.arrive_airport = getAirport(arriveAirport)
             booking.flight.depart_airport = getAirport(departAirport)
+            booking.in_progress = true
             realm.insertOrUpdate(booking)
         }
         return bookingId

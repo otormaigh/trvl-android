@@ -49,7 +49,6 @@ internal class AirportSearchActivity : TrvlActivity<TrvlPresenter<AirportSearchV
         setContentView(R.layout.activity_airport_search)
         ApiIntentService.getAllAirports(this)
 
-        Timber.e("hintResId = $hintResId")
         etSearch.setHint(hintResId)
 
         rvAirports.layoutManager = LinearLayoutManager(this)

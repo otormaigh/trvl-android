@@ -39,6 +39,7 @@ internal object ApiClient {
 
             val retrofitBuilder = Retrofit.Builder()
                     .baseUrl(BuildConfig.API_URL)
+                    .client(okHttpBuilder.build())
                     .addConverterFactory(MoshiConverterFactory.create(moshi))
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
 

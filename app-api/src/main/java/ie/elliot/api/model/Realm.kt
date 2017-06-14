@@ -18,7 +18,6 @@ package ie.elliot.api.model
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 import io.realm.annotations.RealmModule
-import java.util.*
 
 /**
  * @author Elliot Tormey
@@ -33,8 +32,13 @@ object RealmKey {
     object Common {
         val ID = "id"
     }
+
     object Airport {
         val ICAO = "icao"
+    }
+
+    object Booking {
+        val STARTED_AT = "started_at"
     }
 }
 
@@ -89,7 +93,7 @@ open class Passenger(
 
 open class Booking(
         @PrimaryKey
-        var id: Long = 0,
+        var started_at: Long = 0,
         // TODO: Elliot -> Moshi converter to read/write this as 'id' between API
         var flight: Flight = Flight(),
         var in_progress: Boolean = true) : RealmObject()
