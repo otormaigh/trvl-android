@@ -13,25 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ie.elliot.trvl.ui.activity.home
+package ie.elliot.trvl.ui.activity.flight_search
 
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.support.annotation.StringRes
+import android.support.v7.widget.LinearLayoutManager
 import android.view.View
+import ie.elliot.api.ApiIntentService
 import ie.elliot.trvl.R
 import ie.elliot.trvl.base.TrvlActivity
-import ie.elliot.trvl.ui.activity.airport_confirm.AirportConfirmActivity
 import ie.elliot.trvl.ui.activity.airport_search.AirportSearchActivity
-import kotlinx.android.synthetic.main.activity_home.*
+import ie.elliot.trvl.ui.activity.passenger_detail.PassengerDetailActivity
+import kotlinx.android.synthetic.main.activity_flight_search.*
 import timber.log.Timber
 
 /**
  * @author Elliot Tormey
- * @since 04/06/2017
+ * @since 14/06/2017
  */
-internal class HomeActivity : TrvlActivity<HomePresenter>(), View.OnClickListener {
+internal class FlightSearchActivity : TrvlActivity<FlightSearchPresenter>(), FlightSearchView, View.OnClickListener {
     companion object {
         private val HINT_RES_ID = "hint_res_id"
         private val AIRPORT_ICAO = "airport_icao"
@@ -48,12 +50,15 @@ internal class HomeActivity : TrvlActivity<HomePresenter>(), View.OnClickListene
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_home)
-        presenter = HomePresenter()
+        setContentView(R.layout.activity_flight_search)
+
+        presenter = FlightSearchPresenter(this)
 
         avArrive.setOnClickListener(this)
         avDepart.setOnClickListener(this)
-        btnSearch.setOnClickListener(this)
+
+        rvFlightsResults.layoutManager = LinearLayoutManager(this)
+        rvFlightsResults.adapter = FlightSearchAdapter(FlightSearchView@ this)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -67,6 +72,11 @@ internal class HomeActivity : TrvlActivity<HomePresenter>(), View.OnClickListene
                     avDepart.hint -> avDepart.airport = airport
                     else -> Timber.e("hintRes has no match")
                 }
+
+                if (avArrive.airport != null && avDepart.airport != null) {
+                    llStepTwo.visibility = View.VISIBLE
+                    btnSearch.setOnClickListener(this)
+                }
             }
         }
     }
@@ -76,11 +86,13 @@ internal class HomeActivity : TrvlActivity<HomePresenter>(), View.OnClickListene
             R.id.avArrive -> AirportSearchActivity.newInstance(this, avArrive.hint)
             R.id.avDepart -> AirportSearchActivity.newInstance(this, avDepart.hint)
             R.id.btnSearch -> {
-                if (avArrive.airport != null && avDepart.airport != null) {
-                    val bookingId = presenter?.getBookingId(avArrive.airport!!.icao, avDepart.airport!!.icao) as Long
-                    AirportConfirmActivity.newInstance(this, bookingId)
-                }
+                ApiIntentService.getAllFlights(this)
+                rvFlightsResults.visibility = View.VISIBLE
             }
         }
+    }
+
+    override fun goToPassengerDetail() {
+        startActivity(Intent(this, PassengerDetailActivity::class.java))
     }
 }

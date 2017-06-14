@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ui.activity.home.HomeActivity"
+            android:name=".ui.activity.flight_search.FlightSearchActivity"
             android:screenOrientation="sensorPortrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,14 +29,7 @@
             android:noHistory="true"
             android:screenOrientation="sensorPortrait" />
         <activity
-            android:name=".ui.activity.airport_confirm.AirportConfirmActivity"
-            android:screenOrientation="sensorPortrait" />
-        <activity
-            android:name=".ui.activity.flight_results.FlightResultsActivity"
-            android:screenOrientation="sensorPortrait" />
-        <activity
             android:name=".ui.activity.passenger_detail.PassengerDetailActivity"
             android:screenOrientation="sensorPortrait" />
     </application>
-
 </manifest>

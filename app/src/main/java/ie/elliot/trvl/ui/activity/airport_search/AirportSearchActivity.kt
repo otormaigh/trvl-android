@@ -17,14 +17,14 @@ package ie.elliot.trvl.ui.activity.airport_search
 
 import android.content.Intent
 import android.os.Bundle
+import android.support.annotation.StringRes
 import android.support.v7.widget.LinearLayoutManager
 import ie.elliot.api.ApiIntentService
 import ie.elliot.trvl.R
 import ie.elliot.trvl.base.TrvlActivity
-import ie.elliot.trvl.ui.activity.home.HomeActivity
-import kotlinx.android.synthetic.main.activity_airport_search.*
-import android.support.annotation.StringRes
 import ie.elliot.trvl.base.TrvlPresenter
+import ie.elliot.trvl.ui.activity.flight_search.FlightSearchActivity
+import kotlinx.android.synthetic.main.activity_airport_search.*
 import timber.log.Timber
 
 /**
@@ -35,7 +35,7 @@ internal class AirportSearchActivity : TrvlActivity<TrvlPresenter<AirportSearchV
     companion object {
         private val HINT_RES_ID = "hint_res_id"
 
-        fun newInstance(activity: HomeActivity, @StringRes hintResId: Int) {
+        fun newInstance(activity: FlightSearchActivity, @StringRes hintResId: Int) {
             val intent = Intent(activity, AirportSearchActivity::class.java)
             intent.putExtra(HINT_RES_ID, hintResId)
             activity.startActivityForResult(intent, 13)
@@ -57,6 +57,6 @@ internal class AirportSearchActivity : TrvlActivity<TrvlPresenter<AirportSearchV
     }
 
     override fun goHome(airportIcao: String) {
-        HomeActivity.resultFromAirportSearch(this, hintResId, airportIcao)
+        FlightSearchActivity.resultFromAirportSearch(this, hintResId, airportIcao)
     }
 }

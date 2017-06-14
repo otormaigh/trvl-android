@@ -14,14 +14,22 @@
  * limitations under the License.
  */
 
-package ie.elliot.trvl.ui.activity.flight_results
+package ie.elliot.trvl.ui.activity.flight_search
 
+import ie.elliot.api.model.Airport
+import ie.elliot.trvl.base.TrvlPresenter
 import ie.elliot.trvl.base.TrvlView
 
 /**
  * @author Elliot Tormey
- * @since 11/06/2017
+ * @since 14/06/2017
  */
-internal interface FlightResultsView : TrvlView {
-    fun goToPassengerDetail()
+internal class FlightSearchPresenter(view: FlightSearchView) : TrvlPresenter<TrvlView>(view) {
+    fun getAirport(airportIcao: String): Airport {
+        return model.getAirport(airportIcao)
+    }
+
+    fun getBookingId(arriveAirport: String, departAirport: String): Long {
+        return model.createBooking(arriveAirport, departAirport)
+    }
 }
