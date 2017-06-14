@@ -28,7 +28,7 @@ import org.hamcrest.TypeSafeMatcher
  */
 class RecyclerViewMatcher(var recyclerViewId: Int) {
     fun atPosition(position: Int): Matcher<View> {
-        return atPositionOnView(position, -1);
+        return atPositionOnView(position, -1)
     }
 
     fun atPositionOnView(position: Int, targetViewId: Int): Matcher<View> {
@@ -46,7 +46,7 @@ class RecyclerViewMatcher(var recyclerViewId: Int) {
                     }
                 }
 
-                description.appendText("with id: " + idDescription);
+                description.appendText("with id: " + idDescription)
             }
 
             override fun matchesSafely(view: View): Boolean {
@@ -55,7 +55,7 @@ class RecyclerViewMatcher(var recyclerViewId: Int) {
                 if (childView == null) {
                     val recyclerView = view.rootView.findViewById<RecyclerView>(recyclerViewId)
                     if (recyclerView != null && recyclerView.id == recyclerViewId) {
-                        childView = recyclerView.findViewHolderForAdapterPosition(position).itemView;
+                        childView = recyclerView.findViewHolderForAdapterPosition(position).itemView
                     } else {
                         return false
                     }

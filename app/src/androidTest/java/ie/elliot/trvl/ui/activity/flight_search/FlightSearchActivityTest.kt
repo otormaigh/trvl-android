@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ie.elliot.trvl.ui.activity.home
+package ie.elliot.trvl.ui.activity.flight_search
 
 import android.support.test.espresso.Espresso.onView
 import android.support.test.espresso.action.ViewActions.click
@@ -36,10 +36,10 @@ import org.junit.Test
  * @author Elliot Tormey
  * @since 13/06/2017
  */
-class HomeActivityTest {
+class FlightSearchActivityTest {
     private companion object {
         @get:Rule
-        val activityTestRule = ActivityTestRule<HomeActivity>(HomeActivity::class.java)
+        val activityTestRule = ActivityTestRule<FlightSearchActivity>(FlightSearchActivity::class.java)
     }
 
     @Before

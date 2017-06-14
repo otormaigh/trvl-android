@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package ie.elliot.trvl.ui.activity.flight_results
+package ie.elliot.trvl.ui.activity.flight_search
 
 import android.support.test.espresso.Espresso.onView
 import android.support.test.espresso.action.ViewActions.click
@@ -26,6 +26,7 @@ import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.view.View
 import ie.elliot.api.model.Airline
 import ie.elliot.api.model.Airport
 import ie.elliot.api.model.ApiRealmModule
@@ -46,7 +47,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 /**
- * Android test for [FlightResultsAdapter] class. Because the adapter is using the [RealmRecyclerViewAdapter],
+ * Android test for [FlightSearchAdapter] class. Because the adapter is using the [RealmRecyclerViewAdapter],
  * any time we interact with it we must wrap it in a looper thread to make sure the async query
  * attached to the adapter executes successfully. Use [kotlinx.coroutines.experimental.launch] for this e.g.
  * ```
@@ -60,10 +61,10 @@ import org.junit.runner.RunWith
  */
 @Suppress("EXPERIMENTAL_FEATURE_WARNING")
 @RunWith(AndroidJUnit4::class)
-internal class FlightResultsAdapterTest {
+internal class FlightSearchAdapterTest {
     private companion object {
         @get:Rule
-        val activityTestRule = ActivityTestRule<FlightResultsActivity>(FlightResultsActivity::class.java)
+        val activityTestRule = ActivityTestRule<FlightSearchActivity>(FlightSearchActivity::class.java)
 
         fun withRecyclerView(recyclerViewId: Int): RecyclerViewMatcher {
             return RecyclerViewMatcher(recyclerViewId)
@@ -71,7 +72,7 @@ internal class FlightResultsAdapterTest {
     }
 
     private var rvFlightResult: RecyclerView? = null
-    private var flightResultAdapter: FlightResultsAdapter? = null
+    private var flightSearchAdapter: FlightSearchAdapter? = null
 
     @Before
     fun setUp() {
@@ -89,20 +90,23 @@ internal class FlightResultsAdapterTest {
             assertEquals(Realm.getDefaultInstance().configuration, realmConfig)
 
             rvFlightResult = activityTestRule.activity.findViewById(R.id.rvFlightsResults) as RecyclerView
-            flightResultAdapter = FlightResultsAdapter(activityTestRule.activity)
+            flightSearchAdapter = FlightSearchAdapter(activityTestRule.activity as FlightSearchView)
             assertNotNull(rvFlightResult)
-            assertNotNull(flightResultAdapter)
+            assertNotNull(flightSearchAdapter)
 
-            rvFlightResult?.adapter = flightResultAdapter
+            rvFlightResult?.adapter = flightSearchAdapter
             rvFlightResult?.layoutManager = LinearLayoutManager(activityTestRule.activity)
+            rvFlightResult!!.visibility = View.VISIBLE
+
             assertTrue(rvFlightResult!!.isAttachedToWindow)
+            assertTrue(rvFlightResult!!.visibility == View.VISIBLE)
         }
     }
 
     @After
     fun tearDown() {
         rvFlightResult = null
-        flightResultAdapter = null
+        flightSearchAdapter = null
 
         Realm.getDefaultInstance().use { realm ->
             realm.executeTransaction { realm ->
@@ -114,19 +118,19 @@ internal class FlightResultsAdapterTest {
     @Test
     fun testDefaults() {
         launch(Android) {
-            assertEquals(0, flightResultAdapter?.itemCount)
+            assertEquals(0, flightSearchAdapter?.itemCount)
         }
     }
 
     @Test
     fun testWithData() {
         launch(Android) {
-            assertEquals(0, flightResultAdapter?.itemCount)
+            assertEquals(0, flightSearchAdapter?.itemCount)
             realmInsertTestData()
 
             // Sleep for a bit so the async query can update.
             Thread.sleep(500)
-            assertEquals(2, flightResultAdapter?.itemCount)
+            assertEquals(2, flightSearchAdapter?.itemCount)
         }
         onView(withRecyclerView(R.id.rvFlightsResults).atPositionOnView(0, R.id.tvStops)).check(matches(withText(R.string.non_stop)))
 
