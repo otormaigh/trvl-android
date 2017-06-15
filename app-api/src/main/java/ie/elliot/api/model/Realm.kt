@@ -15,6 +15,8 @@
  */
 package ie.elliot.api.model
 
+import ie.elliot.api.moshi_adapter.DateTime
+import ie.elliot.api.moshi_adapter.ToId
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 import io.realm.annotations.RealmModule
@@ -47,7 +49,7 @@ open class Airport(
         var icao: String = "",
         var iata: String = "",
         var name: String = "",
-        var latitude: Double = 0.0,
+        var latitude: String = "",
         var longitude: Double = 0.0,
         // TODO : Elliot -> Test data
         var price: String = "€321.30",
@@ -56,7 +58,7 @@ open class Airport(
 
 open class Flight(
         @PrimaryKey
-        var id: String = "",
+        var id: Int = 0,
         var airline: Airline = Airline(),
         var price: String = "",
         // TODO: Elliot -> Moshi converter to read/write this as 'id' between API
@@ -92,8 +94,10 @@ open class Passenger(
 }
 
 open class Booking(
+        var id: Int = 0,
         @PrimaryKey
+        @field:DateTime
         var started_at: Long = 0,
-        // TODO: Elliot -> Moshi converter to read/write this as 'id' between API
-        var flight: Flight = Flight(),
+        @field:ToId
+        var flight: Flight? = null,
         var in_progress: Boolean = true) : RealmObject()

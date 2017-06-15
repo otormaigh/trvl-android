@@ -19,8 +19,8 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import ie.elliot.trvl.R
 import ie.elliot.api.model.Airport
+import ie.elliot.trvl.R
 import io.realm.Realm
 import io.realm.RealmRecyclerViewAdapter
 import kotlinx.android.synthetic.main.list_item_airport.view.*

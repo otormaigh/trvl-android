@@ -16,10 +16,7 @@
 
 package ie.elliot.api
 
-import ie.elliot.api.model.Airline
-import ie.elliot.api.model.Airport
-import ie.elliot.api.model.Booking
-import ie.elliot.api.model.Flight
+import ie.elliot.api.model.*
 import io.reactivex.Observable
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -40,5 +37,5 @@ internal interface ApiService {
     fun getFlights(): Observable<List<Flight>>
 
     @POST("booking/")
-    fun postBooking(@Body booking: Booking): Observable<Booking>
+    fun postBooking(@Body booking: Booking): Observable<BookingResponse>
 }

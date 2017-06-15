@@ -14,23 +14,18 @@
  * limitations under the License.
  */
 
-package ie.elliot.trvl.ui.activity.flight_search
+package ie.elliot.api.model
 
-import ie.elliot.api.model.Airport
-import ie.elliot.trvl.base.TrvlPresenter
-import ie.elliot.trvl.base.TrvlView
-import ie.elliot.trvl.ui.view.AirportView
+import ie.elliot.api.moshi_adapter.DateTime
 
 /**
  * @author Elliot Tormey
- * @since 14/06/2017
+ * @since 15/06/2017
  */
-internal class FlightSearchPresenter(view: FlightSearchView) : TrvlPresenter<TrvlView>(view) {
-    fun getAirport(airportIcao: String): Airport {
-        return model.getAirport(airportIcao)
-    }
 
-    fun getBookingId(avArrive: AirportView, avDepart: AirportView): Long {
-        return model.createBooking(avArrive.airport?.icao, avDepart.airport?.icao)
-    }
-}
+data class BookingResponse(
+        var id: Int,
+        @field:DateTime
+        var started_at: Long,
+        var flight: Int,
+        var in_progress: Boolean)

@@ -35,11 +35,6 @@ internal class TrvlApplication : Application() {
         Timber.plant(Timber.DebugTree())
 
         initRealm()
-
-//        if (BuildConfig.BUILD_TYPE == "debug") {
-//            // TODO : Elliot -> Test data.
-//            ApiIntentService.loadTestData(this)
-//        }
     }
 
     private fun initRealm() {

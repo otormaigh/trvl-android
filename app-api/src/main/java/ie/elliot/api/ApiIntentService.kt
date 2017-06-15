@@ -21,6 +21,7 @@ import android.content.Context
 import android.content.Intent
 import android.util.Log
 import ie.elliot.api.model.Booking
+import ie.elliot.api.model.Flight
 import ie.elliot.api.model.RealmKey
 import io.reactivex.schedulers.Schedulers
 import io.realm.Realm
@@ -60,7 +61,6 @@ class ApiIntentService : IntentService("ApiIntentService") {
         }
 
         fun postBooking(context: Context, bookingId: Long) {
-            Timber.e("Intent.postBooking")
             Intent(context, ApiIntentService::class.java).apply {
                 putExtra(POST_BOOKING, true)
                 putExtra(BOOKING_ID, bookingId)
@@ -140,19 +140,24 @@ class ApiIntentService : IntentService("ApiIntentService") {
     }
 
     private fun postBooking(intent: Intent) {
-        Timber.e("Api.postBooking")
-        val realm = Realm.getDefaultInstance()
         val bookingId = intent.getLongExtra(BOOKING_ID, 0)
         if (bookingId != 0L) {
-            val booking = realm.copyFromRealm(realm.where(Booking::class.java).equalTo(RealmKey.Booking.STARTED_AT, bookingId).findFirst())
+            val realm = Realm.getDefaultInstance()
+            val bookingRequest = realm.copyFromRealm(realm.where(Booking::class.java).equalTo(RealmKey.Booking.STARTED_AT, bookingId).findFirst())
+            realm.close()
 
             ApiClient.instance()
-                    .postBooking(booking)
+                    .postBooking(bookingRequest!!)
                     .subscribeOn(Schedulers.io())
                     .observeOn(Schedulers.io())
-                    .subscribe({
-                        booking ->
+                    .subscribe({ (flight) ->
                         Timber.i("postBooking : onNext")
+                        Realm.getDefaultInstance().use {
+                            it.executeTransaction {
+                                val booking = it.where(Booking::class.java).equalTo(RealmKey.Booking.STARTED_AT, bookingRequest.started_at).findFirst()
+                                booking?.flight = it.where(Flight::class.java).equalTo(RealmKey.Common.ID, flight).findFirst()
+                            }
+                        }
                     }, {
                         error ->
                         Timber.e("postBooking : onError -> ${Log.getStackTraceString(error)}")

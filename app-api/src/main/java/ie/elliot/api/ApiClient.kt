@@ -16,6 +16,8 @@
 package ie.elliot.api
 
 import com.squareup.moshi.Moshi
+import ie.elliot.api.moshi_adapter.DateTimeAdapter
+import ie.elliot.api.moshi_adapter.FlightToIdAdapter
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -27,7 +29,12 @@ import retrofit2.converter.moshi.MoshiConverterFactory
  * @since 04/06/2017
  */
 internal object ApiClient {
-    private val moshi = Moshi.Builder().build()
+    private val moshi by lazy {
+        Moshi.Builder()
+                .add(FlightToIdAdapter())
+                .add(DateTimeAdapter())
+                .build()
+    }
     private var apiService: ApiService? = null
 
     fun instance(): ApiService {

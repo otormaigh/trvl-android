@@ -43,17 +43,22 @@ internal class TrvlModel : AutoCloseable {
         return realm.where(Booking::class.java).equalTo(RealmKey.Common.ID, bookingId).findFirst()
     }
 
-    fun createBooking(arriveAirport: String, departAirport: String): Long {
-        val bookingId: Long = System.currentTimeMillis()
+    fun createBooking(arriveAirport: String?, departAirport: String?): Long {
+        assert(arriveAirport == null)
+        if (arriveAirport.isNullOrEmpty()) throw Exception("createBooking -> arriveAirport cannot be null or empty")
+        if (departAirport.isNullOrEmpty()) throw Exception("createBooking -> departAirport cannot be null or empty")
+
+        val bookingId = System.currentTimeMillis()
         realm.executeTransaction {
             // There should only be on 'Booking' object at a time in the Realm.
             // Delete all before creating a new one.
             realm.delete(Booking::class.java)
 
             val booking = Booking(started_at = bookingId)
-            booking.flight = Flight()
-            booking.flight.arrive_airport = getAirport(arriveAirport)
-            booking.flight.depart_airport = getAirport(departAirport)
+            //booking.flight = Flight()
+            booking.flight = realm.where(Flight::class.java).findFirst()
+            booking.flight?.arrive_airport = getAirport(arriveAirport as String)
+            booking.flight?.depart_airport = getAirport(departAirport as String)
             booking.in_progress = true
             realm.insertOrUpdate(booking)
         }

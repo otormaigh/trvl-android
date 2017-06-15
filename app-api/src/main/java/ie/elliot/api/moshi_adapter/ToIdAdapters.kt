@@ -14,23 +14,30 @@
  * limitations under the License.
  */
 
-package ie.elliot.trvl.ui.activity.flight_search
+package ie.elliot.api.moshi_adapter
 
-import ie.elliot.api.model.Airport
-import ie.elliot.trvl.base.TrvlPresenter
-import ie.elliot.trvl.base.TrvlView
-import ie.elliot.trvl.ui.view.AirportView
+import com.squareup.moshi.FromJson
+import com.squareup.moshi.JsonQualifier
+import com.squareup.moshi.ToJson
+import ie.elliot.api.model.Flight
 
 /**
  * @author Elliot Tormey
- * @since 14/06/2017
+ * @since 15/06/2017
  */
-internal class FlightSearchPresenter(view: FlightSearchView) : TrvlPresenter<TrvlView>(view) {
-    fun getAirport(airportIcao: String): Airport {
-        return model.getAirport(airportIcao)
+
+@Retention(AnnotationRetention.RUNTIME)
+@JsonQualifier
+annotation class ToId
+
+internal class FlightToIdAdapter {
+    @FromJson @ToId
+    fun fromJson(flightId: String): Flight? {
+        throw UnsupportedOperationException()
     }
 
-    fun getBookingId(avArrive: AirportView, avDepart: AirportView): Long {
-        return model.createBooking(avArrive.airport?.icao, avDepart.airport?.icao)
+    @ToJson
+    fun toJson(@ToId flight: Flight): Int {
+        return flight.id
     }
 }
