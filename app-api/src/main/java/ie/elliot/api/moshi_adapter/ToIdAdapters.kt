@@ -20,6 +20,9 @@ import com.squareup.moshi.FromJson
 import com.squareup.moshi.JsonQualifier
 import com.squareup.moshi.ToJson
 import ie.elliot.api.model.Flight
+import ie.elliot.api.model.RealmKey
+import io.realm.Realm
+import timber.log.Timber
 
 /**
  * @author Elliot Tormey
@@ -32,12 +35,17 @@ annotation class ToId
 
 internal class FlightToIdAdapter {
     @FromJson @ToId
-    fun fromJson(flightId: String): Flight? {
-        throw UnsupportedOperationException()
+    fun fromJson(flight_code: String): Flight? {
+        Timber.i("FlightToIdAdapter -> fromJson")
+        val realm = Realm.getDefaultInstance()
+        val flight = realm.copyFromRealm(realm.where(Flight::class.java).equalTo(RealmKey.Flight.FLIGHT_CODE, flight_code).findFirst())
+        realm.close()
+        return flight
     }
 
     @ToJson
-    fun toJson(@ToId flight: Flight): Int {
-        return flight.id
+    fun toJson(@ToId flight: Flight): String {
+        Timber.i("FlightToIdAdapter -> toJson")
+        return flight.flight_code
     }
 }

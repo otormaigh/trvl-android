@@ -86,8 +86,9 @@ internal class FlightSearchActivity : TrvlActivity<FlightSearchPresenter>(), Fli
             R.id.avArrive -> AirportSearchActivity.newInstance(this, avArrive.hint)
             R.id.avDepart -> AirportSearchActivity.newInstance(this, avDepart.hint)
             R.id.btnSearch -> {
-                ApiIntentService.getAllFlights(this)
-                rvFlightsResults.visibility = View.VISIBLE
+                ApiIntentService.postBooking(this, presenter!!.getBookingId(avArrive, avDepart))
+                //ApiIntentService.getAllFlights(this)
+                //rvFlightsResults.visibility = View.VISIBLE
             }
         }
     }

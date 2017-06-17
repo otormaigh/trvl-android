@@ -42,6 +42,10 @@ object RealmKey {
     object Booking {
         val STARTED_AT = "started_at"
     }
+
+    object Flight {
+        val FLIGHT_CODE = "flight_code"
+    }
 }
 
 open class Airport(
@@ -58,7 +62,7 @@ open class Airport(
 
 open class Flight(
         @PrimaryKey
-        var id: Int = 0,
+        var id: String = "",
         var airline: Airline = Airline(),
         var price: String = "",
         // TODO: Elliot -> Moshi converter to read/write this as 'id' between API
@@ -68,7 +72,8 @@ open class Flight(
         var depart_at: String = "",
         var arrive_at: String = "",
         var flight_time: String = "",
-        var stop_count: Int = 0) : RealmObject()
+        var stop_count: Int = 0,
+        var flight_code: String = "") : RealmObject()
 
 open class Airline(
         @PrimaryKey

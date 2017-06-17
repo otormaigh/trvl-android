@@ -50,12 +50,13 @@ internal class TrvlModel : AutoCloseable {
 
         val bookingId = System.currentTimeMillis()
         realm.executeTransaction {
-            // There should only be on 'Booking' object at a time in the Realm.
+            // There should only be one 'Booking' object at a time in the Realm?
             // Delete all before creating a new one.
             realm.delete(Booking::class.java)
 
             val booking = Booking(started_at = bookingId)
             //booking.flight = Flight()
+            // TODO : Elliot -> Test data
             booking.flight = realm.where(Flight::class.java).findFirst()
             booking.flight?.arrive_airport = getAirport(arriveAirport as String)
             booking.flight?.depart_airport = getAirport(departAirport as String)

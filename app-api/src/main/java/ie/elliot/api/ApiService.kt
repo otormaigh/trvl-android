@@ -37,5 +37,5 @@ internal interface ApiService {
     fun getFlights(): Observable<List<Flight>>
 
     @POST("booking/")
-    fun postBooking(@Body booking: Booking): Observable<BookingResponse>
+    fun postBooking(@Body booking: Booking): Observable<Booking>
 }

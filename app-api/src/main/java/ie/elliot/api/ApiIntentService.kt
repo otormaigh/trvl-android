@@ -150,12 +150,11 @@ class ApiIntentService : IntentService("ApiIntentService") {
                     .postBooking(bookingRequest!!)
                     .subscribeOn(Schedulers.io())
                     .observeOn(Schedulers.io())
-                    .subscribe({ (flight) ->
+                    .subscribe({ bookingResponse ->
                         Timber.i("postBooking : onNext")
                         Realm.getDefaultInstance().use {
                             it.executeTransaction {
-                                val booking = it.where(Booking::class.java).equalTo(RealmKey.Booking.STARTED_AT, bookingRequest.started_at).findFirst()
-                                booking?.flight = it.where(Flight::class.java).equalTo(RealmKey.Common.ID, flight).findFirst()
+                                it.copyToRealmOrUpdate(bookingResponse)
                             }
                         }
                     }, {

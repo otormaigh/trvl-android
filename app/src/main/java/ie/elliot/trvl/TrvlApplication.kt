@@ -17,7 +17,6 @@
 package ie.elliot.trvl
 
 import android.app.Application
-import ie.elliot.api.ApiIntentService
 import ie.elliot.api.model.ApiRealmModule
 import ie.elliot.trvl.model.TrvlRealmMigration
 import io.realm.Realm
