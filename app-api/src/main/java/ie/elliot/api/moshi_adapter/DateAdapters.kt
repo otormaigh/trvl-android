@@ -32,7 +32,7 @@ import java.util.*
 annotation class DateTime
 
 internal class DateTimeAdapter {
-    private val serverDateTime = "yyyy-MM-dd'T'HH:mm:ss'Z'"
+    private val serverDateTime = "yyyy-MM-dd'T'HH:mm:ssZ"
 
     @FromJson @DateTime
     fun fromJson(dateTime: String): Long {

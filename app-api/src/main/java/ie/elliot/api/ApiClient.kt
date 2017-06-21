@@ -29,7 +29,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
  * @since 04/06/2017
  */
 internal object ApiClient {
-    private val moshi by lazy {
+    val moshi by lazy {
         Moshi.Builder()
                 .add(FlightToIdAdapter())
                 .add(DateTimeAdapter())

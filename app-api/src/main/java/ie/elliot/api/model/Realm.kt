@@ -53,7 +53,7 @@ open class Airport(
         var icao: String = "",
         var iata: String = "",
         var name: String = "",
-        var latitude: String = "",
+        var latitude: Double = 0.0,
         var longitude: Double = 0.0,
         // TODO : Elliot -> Test data
         var price: String = "€321.30",
@@ -65,9 +65,7 @@ open class Flight(
         var id: String = "",
         var airline: Airline = Airline(),
         var price: String = "",
-        // TODO: Elliot -> Moshi converter to read/write this as 'id' between API
         var depart_airport: Airport = Airport(),
-        // TODO: Elliot -> Moshi converter to read/write this as 'id' between API
         var arrive_airport: Airport = Airport(),
         var depart_at: String = "",
         var arrive_at: String = "",
@@ -99,7 +97,7 @@ open class Passenger(
 }
 
 open class Booking(
-        var id: Int = 0,
+        var id: String = "",
         @PrimaryKey
         @field:DateTime
         var started_at: Long = 0,

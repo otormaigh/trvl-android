@@ -22,30 +22,31 @@ import com.squareup.moshi.ToJson
 import ie.elliot.api.model.Flight
 import ie.elliot.api.model.RealmKey
 import io.realm.Realm
-import timber.log.Timber
 
 /**
  * @author Elliot Tormey
  * @since 15/06/2017
  */
-
 @Retention(AnnotationRetention.RUNTIME)
 @JsonQualifier
 annotation class ToId
 
 internal class FlightToIdAdapter {
     @FromJson @ToId
-    fun fromJson(flight_code: String): Flight? {
-        Timber.i("FlightToIdAdapter -> fromJson")
-        val realm = Realm.getDefaultInstance()
-        val flight = realm.copyFromRealm(realm.where(Flight::class.java).equalTo(RealmKey.Flight.FLIGHT_CODE, flight_code).findFirst())
-        realm.close()
-        return flight
+    fun fromJson(json: Any): Flight? {
+        if (json is Flight) return json
+        if (json is String) {
+            val realm = Realm.getDefaultInstance()
+            val flight = realm.where(Flight::class.java).equalTo(RealmKey.Flight.FLIGHT_CODE, json).findFirst()
+            if (flight != null) return realm.copyFromRealm(flight)
+            realm.close()
+            return Flight(flight_code = json)
+        }
+        return null
     }
 
     @ToJson
     fun toJson(@ToId flight: Flight): String {
-        Timber.i("FlightToIdAdapter -> toJson")
         return flight.flight_code
     }
 }
